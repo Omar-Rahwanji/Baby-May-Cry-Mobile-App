@@ -1,0 +1,47 @@
+{
+  "project_info": {
+    "project_number": "857495607595",
+    "project_id": "baby-may-cry",
+    "storage_bucket": "baby-may-cry.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:857495607595:android:0d54c56cafae0c37fa8d6e",
+        "android_client_info": {
+          "package_name": "com.babymaycry.baby_may_cry"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "857495607595-dsmibik86ev54b5gp8nrg3kt8sb8pml9.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.babymaycry.baby_may_cry",
+            "certificate_hash": "0bfd47acb03c2ca6f99709a998e91eb1c5df85c0"
+          }
+        },
+        {
+          "client_id": "857495607595-95n1eoed36ceo200r62odd9i4a59m9uh.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyC-ThLIbwZS9Z2oTNTnensittrtDG-J7HM"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "857495607595-95n1eoed36ceo200r62odd9i4a59m9uh.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
