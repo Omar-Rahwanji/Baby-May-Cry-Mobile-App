@@ -1,4 +1,4 @@
-import 'package:baby_may_cry/static/colors.dart';
+import '../static/colors.dart';
 import 'package:flutter/material.dart';
 
 class BookingHistoryCard extends StatelessWidget {
@@ -10,7 +10,7 @@ class BookingHistoryCard extends StatelessWidget {
       textDirection: TextDirection.ltr,
       child: Column(
         children: [
-          SizedBox(height: 10),
+         const  SizedBox(height: 10),
           Card(
             color: Colors.white,
             borderOnForeground: true,
@@ -20,7 +20,7 @@ class BookingHistoryCard extends StatelessWidget {
               children: <Widget>[
                 ListTile(
                   isThreeLine: true,
-                  leading: Icon(
+                  leading:const  Icon(
                     Icons.airport_shuttle,
                     size: 50,
                   ),

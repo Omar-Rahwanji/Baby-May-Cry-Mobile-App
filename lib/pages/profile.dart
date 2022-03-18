@@ -1,5 +1,3 @@
-
-
 import 'package:flutter/material.dart';
 import 'package:localize_and_translate/localize_and_translate.dart';
 
@@ -32,20 +30,15 @@ class ProfilePage extends StatelessWidget {
             radius: 60,
             backgroundColor: Colors.grey,
           ),
-          SizedBox(height: 10),
+          const SizedBox(height: 10),
           Text(
-            userData['userName'].toString(),
-            style: TextStyle(fontSize: 22),
+            userData['fullName'].toString(),
+            style: const TextStyle(fontSize: 22),
           ),
-          SizedBox(height: 10),
+          const SizedBox(height: 10),
           Text(
-            userData['userPhoneNumber'].toString(),
-            style: TextStyle(fontSize: 22),
-          ),
-          SizedBox(height: 10),
-          Text(
-            userData['userEmail'].toString(),
-            style: TextStyle(fontSize: 22),
+            userData['email'].toString(),
+            style: const TextStyle(fontSize: 22),
           ),
         ],
       ),

@@ -1,14 +1,14 @@
-import 'package:baby_may_cry/pages/about-us.dart';
-import 'package:baby_may_cry/pages/bookings-history.dart';
-import 'package:baby_may_cry/pages/home.dart';
-import 'package:baby_may_cry/pages/language-settings.dart';
-import 'package:baby_may_cry/pages/login.dart';
-import 'package:baby_may_cry/pages/offices.dart';
-import 'package:baby_may_cry/pages/otp.dart';
-import 'package:baby_may_cry/pages/profile.dart';
-import 'package:baby_may_cry/pages/services.dart';
-import 'package:baby_may_cry/pages/signup.dart';
-import 'package:baby_may_cry/pages/splash-screen.dart';
+import './pages/about-us.dart';
+import 'pages/bookings_history.dart';
+import './pages/home.dart';
+import 'pages/language_settings.dart';
+import './pages/login.dart';
+import './pages/offices.dart';
+import './pages/profile.dart';
+import './pages/services.dart';
+import './pages/signup.dart';
+import 'pages/splash_screen.dart';
+import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:localize_and_translate/localize_and_translate.dart';
 
@@ -21,7 +21,7 @@ void main() async {
     languagesList: <String>['ar', 'en'],
     assetsDirectory: 'assets/lang/',
   );
-  // await Firebase.initializeApp();
+  await Firebase.initializeApp();
   runApp(
     LocalizedApp(
       child: const MyApp(),
@@ -41,7 +41,7 @@ class MyApp extends StatelessWidget {
       supportedLocales: translator.locals(), // Locals list
       title: 'abs booking',
       theme: ThemeData(
-        primarySwatch: Colors.green,
+        primarySwatch: Colors.pink,
         textTheme: Theme.of(context).textTheme.apply(
               fontSizeFactor: 1.1,
               fontSizeDelta: 1.0,
@@ -50,22 +50,18 @@ class MyApp extends StatelessWidget {
             ),
       ),
       routes: {
-        '/': (context) => SplashPage(),
-        '/home': (context) => Directionality(
+        '/': (context) => const SplashPage(),
+        '/home': (context) => const Directionality(
               textDirection: TextDirection.ltr,
               child: HomePage(),
             ),
-        '/login': (context) => Directionality(
+        '/login': (context) => const Directionality(
               textDirection: TextDirection.ltr,
               child: LoginPage(),
             ),
-        '/sign-up': (context) => Directionality(
+        '/sign-up': (context) => const Directionality(
               textDirection: TextDirection.ltr,
               child: SignupPage(),
-            ),
-        '/otp': (context) => Directionality(
-              textDirection: TextDirection.ltr,
-              child: OTPPage(),
             ),
         '/offices': (context) => Directionality(
               textDirection: TextDirection.ltr,
@@ -87,7 +83,7 @@ class MyApp extends StatelessWidget {
               textDirection: TextDirection.ltr,
               child: AboutUs(),
             ),
-        '/language-settings': (context) => Directionality(
+        '/language-settings': (context) => const Directionality(
               textDirection: TextDirection.ltr,
               child: LanguageSettings(),
             ),

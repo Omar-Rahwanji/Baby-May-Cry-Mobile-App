@@ -1,11 +1,10 @@
 
-
-import 'package:baby_may_cry/static/colors.dart';
+import '../static/colors.dart';
 import 'package:flutter/material.dart';
 import 'package:localize_and_translate/localize_and_translate.dart';
 
 class LanguageSettings extends StatefulWidget {
-  LanguageSettings({Key? key}) : super(key: key);
+  const LanguageSettings({Key? key}) : super(key: key);
 
   @override
   State<LanguageSettings> createState() => _LanguageSettingsState();

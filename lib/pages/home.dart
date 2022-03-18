@@ -1,5 +1,3 @@
-
-
 import 'package:baby_may_cry/pages/booking.dart';
 import 'package:baby_may_cry/pages/offices.dart';
 import 'package:baby_may_cry/pages/services.dart';
@@ -7,9 +5,10 @@ import 'package:baby_may_cry/services/auth.dart';
 import 'package:baby_may_cry/static/colors.dart';
 import 'package:flutter/material.dart';
 import 'package:localize_and_translate/localize_and_translate.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class HomePage extends StatefulWidget {
-  HomePage({Key? key}) : super(key: key);
+  const HomePage({Key? key}) : super(key: key);
   @override
   _HomePageState createState() => _HomePageState();
 }
@@ -17,7 +16,7 @@ class HomePage extends StatefulWidget {
 class _HomePageState extends State<HomePage> {
   int currentPageIndex = 0;
   List<Widget> navPages = [
-    BookingPage(),
+    const BookingPage(),
     ServicesPage(),
     OfficesPage(),
   ];
@@ -31,42 +30,43 @@ class _HomePageState extends State<HomePage> {
         child: Column(
           children: [
             UserAccountsDrawerHeader(
-              accountName: Text(userData['userName'].toString()),
-              accountEmail: Text(userData['userEmail'].toString()),
-              currentAccountPicture: Image(
+              accountName: Text(userData['fullName'].toString()),
+              accountEmail: Text(userData['email'].toString()),
+              currentAccountPicture: const Image(
                 image: AssetImage('assets/images/logo.png'),
               ),
             ),
             ListTile(
-              leading: Icon(Icons.person),
+              leading: const Icon(Icons.person),
               title: Text("Profile".tr()),
-              onTap: () {
+              onTap: () async {
+                final prefs = await SharedPreferences.getInstance();
+
                 Navigator.pushNamed(context, "/profile", arguments: {
-                  'userName': userData['userName'],
-                  'userEmail': userData['userEmail'],
-                  'userPhoneNumber': userData['userPhoneNumber']
+                  'email': prefs.getString('email'),
+                  'fullName': prefs.getString('fullName')
                 });
               },
             ),
             ListTile(
-              leading: Icon(Icons.airport_shuttle),
+              leading: const Icon(Icons.airport_shuttle),
               title: Text("Bookings history".tr()),
               onTap: () {
                 Navigator.pushNamed(context, "/bookings-history");
               },
             ),
             ListTile(
-              leading: Icon(Icons.language),
+              leading: const Icon(Icons.language),
               title: Text("Language settings".tr()),
               onTap: () {
                 Navigator.pushNamed(context, "/language-settings");
               },
             ),
-            Divider(
+            const Divider(
               thickness: 3,
             ),
             ListTile(
-              leading: Icon(Icons.logout),
+              leading: const Icon(Icons.logout),
               title: Text("Log out".tr()),
               onTap: () {
                 AuthService.logout();
@@ -84,7 +84,7 @@ class _HomePageState extends State<HomePage> {
         leading: Builder(
           builder: (BuildContext context) {
             return IconButton(
-              icon: Icon(Icons.menu),
+              icon: const Icon(Icons.menu),
               onPressed: () {
                 Scaffold.of(context).openDrawer();
               },
@@ -92,13 +92,13 @@ class _HomePageState extends State<HomePage> {
             );
           },
         ),
-        title: Text("ABS Booking"),
+        title: const Text("ABS Booking"),
         centerTitle: true,
         elevation: 16,
         actions: [
           IconButton(
-            padding: EdgeInsets.only(right: 10),
-            icon: Icon(Icons.info_outline),
+            padding: const EdgeInsets.only(right: 10),
+            icon: const Icon(Icons.info_outline),
             onPressed: () {
               Navigator.pushNamed(context, "/about-us");
             },
@@ -107,31 +107,31 @@ class _HomePageState extends State<HomePage> {
       ),
       bottomNavigationBar: BottomNavigationBar(
         selectedItemColor: CustomColors.primary,
-        currentIndex: this.currentPageIndex,
+        currentIndex: currentPageIndex,
         elevation: 16,
         selectedFontSize: 16,
         unselectedFontSize: 16,
         onTap: (newPageIndex) {
           setState(() {
-            this.currentPageIndex = newPageIndex;
+            currentPageIndex = newPageIndex;
           });
         },
         items: [
           BottomNavigationBarItem(
-            icon: Icon(Icons.home),
+            icon: const Icon(Icons.home),
             label: "Home".tr(),
           ),
           BottomNavigationBarItem(
-            icon: Icon(Icons.airport_shuttle),
+            icon: const Icon(Icons.airport_shuttle),
             label: "Services".tr(),
           ),
           BottomNavigationBarItem(
-            icon: Icon(Icons.business),
+            icon: const Icon(Icons.business),
             label: "Offices".tr(),
           ),
         ],
       ),
-      body: this.navPages[this.currentPageIndex],
+      body: navPages[currentPageIndex],
     );
   }
 }
