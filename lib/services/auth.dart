@@ -1,5 +1,7 @@
 import 'package:baby_may_cry/services/db.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:flutter/material.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class AuthService {
@@ -40,17 +42,14 @@ class AuthService {
     return false;
   }
 
-  static void resetPassword(String email) async {
-    // await auth.currentUser?.updatePassword(newPassword).then(
-    //   (_) {
-    //     print("done updating password");
-    //   },
-    // ).catchError(
-    //   (e) {
-    //     print("failed updating the password");
-    //   },
-    // );
-    auth.sendPasswordResetEmail(email: email);
+  static Future<bool> resetPassword(String email) async {
+    try {
+      await auth.sendPasswordResetEmail(email: email);
+      return true;
+    } catch (e) {
+      print(e);
+      return false;
+    }
   }
 
   static void logout() async {

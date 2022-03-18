@@ -3,14 +3,14 @@ import '../static/colors.dart';
 import 'package:flutter/material.dart';
 import 'package:localize_and_translate/localize_and_translate.dart';
 
-class LanguageSettings extends StatefulWidget {
-  const LanguageSettings({Key? key}) : super(key: key);
+class LanguageSettingsPage extends StatefulWidget {
+  const LanguageSettingsPage({Key? key}) : super(key: key);
 
   @override
-  State<LanguageSettings> createState() => _LanguageSettingsState();
+  State<LanguageSettingsPage> createState() => _LanguageSettingsPageState();
 }
 
-class _LanguageSettingsState extends State<LanguageSettings> {
+class _LanguageSettingsPageState extends State<LanguageSettingsPage> {
   String currentLanguage =
       translator.activeLanguageCode == "en" ? "English" : "العربية";
 

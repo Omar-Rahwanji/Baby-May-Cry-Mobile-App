@@ -1,4 +1,6 @@
-import './pages/about-us.dart';
+import 'package:baby_may_cry/pages/forgot_password.dart';
+
+import 'pages/about_us.dart';
 import 'pages/bookings_history.dart';
 import './pages/home.dart';
 import 'pages/language_settings.dart';
@@ -63,6 +65,10 @@ class MyApp extends StatelessWidget {
               textDirection: TextDirection.ltr,
               child: SignupPage(),
             ),
+        '/forgot-password': (context) => const Directionality(
+              textDirection: TextDirection.ltr,
+              child: ForgotPasswordPage(),
+            ),
         '/offices': (context) => Directionality(
               textDirection: TextDirection.ltr,
               child: OfficesPage(),
@@ -81,11 +87,11 @@ class MyApp extends StatelessWidget {
             ),
         '/about-us': (context) => Directionality(
               textDirection: TextDirection.ltr,
-              child: AboutUs(),
+              child: AboutUsPage(),
             ),
         '/language-settings': (context) => const Directionality(
               textDirection: TextDirection.ltr,
-              child: LanguageSettings(),
+              child: LanguageSettingsPage(),
             ),
       },
     );

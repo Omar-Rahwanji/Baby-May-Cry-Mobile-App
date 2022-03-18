@@ -84,7 +84,6 @@ class _SignupPageState extends State<SignupPage> {
                       icon: Icons.person_outlined,
                     ),
                     const SizedBox(height: 20),
-                    const SizedBox(height: 20),
                     CustomTextField(
                       controller: email,
                       inputType: TextInputType.emailAddress,

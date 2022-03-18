@@ -19,13 +19,13 @@ class _LoginPageState extends State<LoginPage> {
   final GlobalKey<FormState> _formKey = GlobalKey();
   final email = TextEditingController();
   final password = TextEditingController();
-  late List<bool> isSelected;
+  late List<bool> isSelected = List.generate(2, (index) => false);
   bool showSpinner = false;
 
   @override
   void initState() {
     super.initState();
-    isSelected = [true, false];
+    // isSelected = [true, false];
   }
 
   @override
@@ -61,7 +61,8 @@ class _LoginPageState extends State<LoginPage> {
                       ),
                       ToggleButtons(
                           selectedColor: CustomColors.primary,
-                          disabledColor: Colors.white,
+                          
+                          // disabledColor: Colors.white,
                           children: const [
                             Padding(
                               padding: EdgeInsets.symmetric(horizontal: 5.0),
@@ -74,9 +75,10 @@ class _LoginPageState extends State<LoginPage> {
                           ],
                           isSelected: isSelected,
                           onPressed: (index) {
-                            for (int i = 0; i < isSelected.length; i++) {
-                              isSelected[i] = i == index;
-                            }
+                            setState(() {
+                              isSelected[index] = !isSelected[index];
+                            });
+
                             translator.setNewLanguage(
                               context,
                               newLanguage: translator.activeLanguageCode == "en"
@@ -85,7 +87,6 @@ class _LoginPageState extends State<LoginPage> {
                               remember: true,
                               restart: true,
                             );
-                            setState(() {});
                           }),
                       SizedBox(height: screenheight * 0.1),
                       Container(
@@ -115,16 +116,6 @@ class _LoginPageState extends State<LoginPage> {
                         maxLength: 50,
                         icon: Icons.email_outlined,
                       ),
-                      InkWell(
-                        child: Text(
-                          "Forgot password?".tr(),
-                          style: TextStyle(
-                            color: CustomColors.primary,
-                            fontSize: 18,
-                          ),
-                        ),
-                        onTap: () => AuthService.resetPassword(email.text),
-                      ),
                       const SizedBox(height: 25),
                       CustomTextField(
                         controller: password,
@@ -134,6 +125,27 @@ class _LoginPageState extends State<LoginPage> {
                         isCenteredInput: false,
                         maxLength: 50,
                         icon: Icons.lock,
+                      ),
+                      const SizedBox(height: 5),
+                      Align(
+                        alignment: translator.activeLanguageCode == 'en'
+                            ? Alignment.centerLeft
+                            : Alignment.centerRight,
+                        child: InkWell(
+                          child: Text(
+                            "Forgot your password?".tr(),
+                            textDirection:
+                                (translator.activeLanguageCode == "en")
+                                    ? TextDirection.ltr
+                                    : TextDirection.rtl,
+                            textAlign: TextAlign.right,
+                            style: TextStyle(
+                                color: CustomColors.primary,
+                                fontSize: 18,
+                                decoration: TextDecoration.underline),
+                          ),
+                          onTap: () => Navigator.pushNamed(context, "/forgot-password"),
+                        ),
                       ),
                       const SizedBox(height: 25),
                       ElevatedButton(
