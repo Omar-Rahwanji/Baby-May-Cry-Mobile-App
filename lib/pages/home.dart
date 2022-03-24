@@ -30,6 +30,9 @@ class _HomePageState extends State<HomePage> {
         child: Column(
           children: [
             UserAccountsDrawerHeader(
+              decoration: BoxDecoration(
+                color: CustomColors.secondary,
+              ),
               accountName: Text(userData['fullName'].toString()),
               accountEmail: Text(userData['email'].toString()),
               currentAccountPicture: const Image(

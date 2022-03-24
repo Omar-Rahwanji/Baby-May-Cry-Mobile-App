@@ -1,4 +1,5 @@
 import 'package:baby_may_cry/components/reading_card.dart';
+import 'package:baby_may_cry/components/recording_button.dart';
 import 'package:flutter/material.dart';
 import 'package:localize_and_translate/localize_and_translate.dart';
 
@@ -81,7 +82,7 @@ class _ParentDashboardState extends State<ParentDashboard> {
               ),
             ),
           ),
-          const SizedBox(height: 30),
+          const SizedBox(height: 50),
           Text(
             "Hungry".tr(),
             style: const TextStyle(
@@ -115,15 +116,8 @@ class _ParentDashboardState extends State<ParentDashboard> {
               ),
             ],
           ),
-          const SizedBox(height: 20),
-          Row(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              ReadingCard(color: CustomColors.primary, image: "assets/images/pulse.png", label: "heart rate", reading: "85", unit: "bpm"),
-              const SizedBox(width: 40),
-              ReadingCard(color: CustomColors.secondary, image: "assets/images/temperature.png", label: "temperature", reading: "38", unit: "c"),
-            ],
-          ),
+          const SizedBox(height: 60),
+          RecordingButton(),
         ],
       ),
     );
