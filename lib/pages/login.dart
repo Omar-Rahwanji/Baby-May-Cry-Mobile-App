@@ -61,7 +61,7 @@ class _LoginPageState extends State<LoginPage> {
                       ),
                       ToggleButtons(
                           selectedColor: CustomColors.primary,
-                          
+
                           // disabledColor: Colors.white,
                           children: const [
                             Padding(
@@ -144,7 +144,8 @@ class _LoginPageState extends State<LoginPage> {
                                 fontSize: 18,
                                 decoration: TextDecoration.underline),
                           ),
-                          onTap: () => Navigator.pushNamed(context, "/forgot-password"),
+                          onTap: () =>
+                              Navigator.pushNamed(context, "/forgot-password"),
                         ),
                       ),
                       const SizedBox(height: 25),
@@ -171,6 +172,7 @@ class _LoginPageState extends State<LoginPage> {
                                     'fullName': prefs.getString('fullName')
                                   });
                             } else {
+                              password.clear();
                               Fluttertoast.showToast(
                                 msg: "Failed logging in, please try again".tr(),
                                 backgroundColor: Colors.red,

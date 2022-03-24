@@ -1,6 +1,6 @@
-import 'package:baby_may_cry/pages/booking.dart';
-import 'package:baby_may_cry/pages/offices.dart';
-import 'package:baby_may_cry/pages/services.dart';
+import 'generate_report.dart';
+import 'profile.dart';
+import 'parent_dashboard.dart';
 import 'package:baby_may_cry/services/auth.dart';
 import 'package:baby_may_cry/static/colors.dart';
 import 'package:flutter/material.dart';
@@ -16,9 +16,9 @@ class HomePage extends StatefulWidget {
 class _HomePageState extends State<HomePage> {
   int currentPageIndex = 0;
   List<Widget> navPages = [
-    const BookingPage(),
-    ServicesPage(),
-    OfficesPage(),
+    const ParentDashboard(),
+    const GenerateReportPage(),
+    const ProfilePage()
   ];
 
   @override
@@ -49,13 +49,6 @@ class _HomePageState extends State<HomePage> {
               },
             ),
             ListTile(
-              leading: const Icon(Icons.airport_shuttle),
-              title: Text("Bookings history".tr()),
-              onTap: () {
-                Navigator.pushNamed(context, "/bookings-history");
-              },
-            ),
-            ListTile(
               leading: const Icon(Icons.language),
               title: Text("Language settings".tr()),
               onTap: () {
@@ -81,10 +74,14 @@ class _HomePageState extends State<HomePage> {
         ),
       ),
       appBar: AppBar(
+        backgroundColor: Colors.transparent,
         leading: Builder(
           builder: (BuildContext context) {
             return IconButton(
-              icon: const Icon(Icons.menu),
+              iconSize: 15,
+              color: Colors.grey,
+              icon: Image.asset("assets/images/menu.png",
+                  width: 30, color: Colors.grey),
               onPressed: () {
                 Scaffold.of(context).openDrawer();
               },
@@ -92,11 +89,23 @@ class _HomePageState extends State<HomePage> {
             );
           },
         ),
-        title: const Text("ABS Booking"),
+        elevation: 0,
+        title: Container(
+          margin: const EdgeInsets.only(top: 10),
+          child: Hero(
+            tag: "logo",
+            child: Image.asset(
+              "assets/images/logo.png",
+              width: 100,
+            ),
+          ),
+        ),
         centerTitle: true,
-        elevation: 16,
+        toolbarHeight: 80,
         actions: [
           IconButton(
+            iconSize: 30,
+            color: Colors.grey,
             padding: const EdgeInsets.only(right: 10),
             icon: const Icon(Icons.info_outline),
             onPressed: () {
@@ -106,6 +115,8 @@ class _HomePageState extends State<HomePage> {
         ],
       ),
       bottomNavigationBar: BottomNavigationBar(
+        showSelectedLabels: false,
+        showUnselectedLabels: false,
         selectedItemColor: CustomColors.primary,
         currentIndex: currentPageIndex,
         elevation: 16,
@@ -116,18 +127,18 @@ class _HomePageState extends State<HomePage> {
             currentPageIndex = newPageIndex;
           });
         },
-        items: [
+        items: const [
           BottomNavigationBarItem(
-            icon: const Icon(Icons.home),
-            label: "Home".tr(),
+            icon: Icon(Icons.home_outlined),
+            label: "",
           ),
           BottomNavigationBarItem(
-            icon: const Icon(Icons.airport_shuttle),
-            label: "Services".tr(),
+            icon: Icon(Icons.calendar_month_outlined),
+            label: "",
           ),
           BottomNavigationBarItem(
-            icon: const Icon(Icons.business),
-            label: "Offices".tr(),
+            icon: Icon(Icons.person_outline),
+            label: "",
           ),
         ],
       ),

@@ -152,15 +152,15 @@ class _SignupPageState extends State<SignupPage> {
                         Text("HaveAccount".tr()),
                         const SizedBox(width: 8),
                         InkWell(
-                          child: Text(
-                            "Login".tr(),
-                            style: TextStyle(
-                              color: CustomColors.primary,
-                              fontSize: 18,
+                            child: Text(
+                              "Login".tr(),
+                              style: TextStyle(
+                                color: CustomColors.primary,
+                                fontSize: 18,
+                              ),
                             ),
-                          ),
-                          onTap: () => Navigator.pushNamed(context, "/login"),
-                        ),
+                            onTap: () => Navigator.pushNamedAndRemoveUntil(
+                                context, "/login", (route) => false)),
                       ],
                     ),
                   ],

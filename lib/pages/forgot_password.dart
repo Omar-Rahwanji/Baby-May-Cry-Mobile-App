@@ -53,6 +53,7 @@ class _ForgotPasswordPageState extends State<ForgotPasswordPage> {
                     ),
                     Text(
                       "Reset Password".tr(),
+                      textDirection: TextDirection.rtl,
                       style: const TextStyle(
                         color: Colors.black,
                         fontSize: 32,
@@ -101,7 +102,10 @@ class _ForgotPasswordPageState extends State<ForgotPasswordPage> {
                           });
                         }
                       },
-                      child: Text("Reset".tr()),
+                      child: Text(
+                        "Reset".tr(),
+                        textDirection: TextDirection.rtl,
+                      ),
                       style: ElevatedButton.styleFrom(
                         minimumSize: const Size.fromHeight(40),
                         padding: const EdgeInsets.symmetric(
