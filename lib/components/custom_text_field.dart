@@ -1,4 +1,4 @@
-import 'package:baby_may_cry/static/colors.dart';
+import '../static/colors.dart';
 import 'package:flutter/material.dart';
 import 'package:localize_and_translate/localize_and_translate.dart';
 
@@ -28,7 +28,7 @@ class CustomTextField extends StatelessWidget {
     return Directionality(
       textDirection: TextDirection.ltr,
       child: Container(
-        decoration: BoxDecoration(
+        decoration: const BoxDecoration(
           boxShadow: [
             BoxShadow(
               color: Colors.grey,
@@ -40,29 +40,30 @@ class CustomTextField extends StatelessWidget {
           style: TextStyle(
             color: CustomColors.primary,
           ),
-          keyboardType: this.inputType,
-          controller: this.controller,
-          obscureText: this.isObsecured,
-          textAlign: this.maxLength == 1
+          keyboardType: inputType,
+          controller: controller,
+          obscureText: isObsecured,
+          textAlign: maxLength == 1
               ? TextAlign.center
               : textAlign[(translator.activeLanguageCode == "en") ? 0 : 1],
-          maxLength: this.maxLength,
+          maxLength: maxLength,
           textInputAction: TextInputAction.next,
           onChanged: (maxLength == 1)
               ? (_) {
-                  if (controller.text.isNotEmpty)
+                  if (controller.text.isNotEmpty) {
                     FocusScope.of(context).nextFocus();
+                  }
                 }
               : null,
           decoration: InputDecoration(
-            prefixIcon: (maxLength > 1) ? Icon(this.icon) : null,
+            prefixIcon: (maxLength > 1) ? Icon(icon) : null,
             counterText: "",
             filled: true,
             focusedBorder: InputBorder.none,
             errorBorder: InputBorder.none,
             disabledBorder: InputBorder.none,
             fillColor: Colors.white,
-            hintText: this.hint,
+            hintText: hint,
             hintStyle: TextStyle(color: CustomColors.secondary),
             contentPadding: const EdgeInsets.fromLTRB(
               10.0,
@@ -82,15 +83,19 @@ class CustomTextField extends StatelessWidget {
             if (value!.isEmpty) return "Value shouldn't be empty".tr();
             String hint = this.hint.tr();
             if ((hint == "First Name".tr() || hint == "Last Name".tr()) &&
-                value.length < 3)
+                value.length < 3) {
               return "Value shouldn't be less than 3 characters".tr();
+            }
             if ((hint == "First name".tr() || hint == "Last name".tr()) &&
-                value.startsWith(RegExp(r"^[0-9]")))
+                value.startsWith(RegExp(r"^[0-9]"))) {
               return "Value shouldn't start with number".tr();
+            }
 
             if (hint == "Email".tr() &&
                 !RegExp(r"^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,253}[a-zA-Z0-9])?(?:\.[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,253}[a-zA-Z0-9])?)*$")
-                    .hasMatch(value)) return "Enter a valid email".tr();
+                    .hasMatch(value)) {
+              return "Enter a valid email".tr();
+            }
           },
         ),
       ),

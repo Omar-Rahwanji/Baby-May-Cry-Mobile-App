@@ -1,8 +1,7 @@
-import 'package:baby_may_cry/static/colors.dart';
 import 'package:flutter/material.dart';
 
 class ReadingCard extends StatelessWidget {
-  ReadingCard(
+  const ReadingCard(
       {Key? key,
       required this.color,
       required this.image,
@@ -10,11 +9,11 @@ class ReadingCard extends StatelessWidget {
       required this.reading,
       required this.unit})
       : super(key: key);
-  Color color;
-  String image;
-  String label;
-  String reading;
-  String unit;
+  final Color color;
+  final String image;
+  final String label;
+  final String reading;
+  final String unit;
 
   @override
   Widget build(BuildContext context) {

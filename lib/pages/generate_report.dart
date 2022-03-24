@@ -12,7 +12,7 @@ class _GenerateReportPageState extends State<GenerateReportPage> {
   Widget build(BuildContext context) {
     return SingleChildScrollView(
       child: Column(
-        children: [],
+        children: const [],
       ),
     );
   }

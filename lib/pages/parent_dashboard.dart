@@ -1,4 +1,3 @@
-import 'package:baby_may_cry/components/reading_card.dart';
 import 'package:baby_may_cry/components/recording_button.dart';
 import 'package:flutter/material.dart';
 import 'package:localize_and_translate/localize_and_translate.dart';
@@ -117,7 +116,7 @@ class _ParentDashboardState extends State<ParentDashboard> {
             ],
           ),
           const SizedBox(height: 60),
-          RecordingButton(),
+          const RecordingButton(),
         ],
       ),
     );

@@ -3,7 +3,7 @@ import 'package:fluttertoast/fluttertoast.dart';
 import 'package:localize_and_translate/localize_and_translate.dart';
 import 'package:modal_progress_hud_nsn/modal_progress_hud_nsn.dart';
 
-import '../components/custom-text-field.dart';
+import '../components/custom_text_field.dart';
 import '../services/auth.dart';
 
 class ForgotPasswordPage extends StatefulWidget {

@@ -1,6 +1,5 @@
-import '../components/custom-text-field.dart';
+import '../components/custom_text_field.dart';
 import '../services/auth.dart';
-import '../services/db.dart';
 import '../static/colors.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';

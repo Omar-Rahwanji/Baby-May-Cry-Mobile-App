@@ -60,7 +60,7 @@ class _RecordingButtonState extends State<RecordingButton> {
                 icon: Icon(icon),
                 onPressed: () async {
                   await recorder.toggleRecording();
-                  final isRecording = recorder.isRecording;
+                  isRecording = recorder.isRecording;
                   setState(() {});
                 },
               ),
