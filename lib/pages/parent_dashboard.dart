@@ -1,7 +1,8 @@
-import 'package:baby_may_cry/components/recording_button.dart';
+import 'package:baby_may_cry/components/recorder_button.dart';
 import 'package:flutter/material.dart';
 import 'package:localize_and_translate/localize_and_translate.dart';
 
+import '../components/player_button.dart';
 import '../static/colors.dart';
 
 class ParentDashboard extends StatefulWidget {
@@ -29,28 +30,7 @@ class _ParentDashboardState extends State<ParentDashboard> {
               fontSize: 30,
             ),
           ),
-          const SizedBox(height: 20),
-          DropdownButton(
-            elevation: 16,
-            iconEnabledColor: CustomColors.primary,
-            value: "device 3 - basel".tr(),
-            icon: const Icon(
-              Icons.arrow_drop_down,
-              size: 26,
-            ),
-            items: [
-              "device 3 - basel".tr(),
-              "device 2 - essam".tr(),
-              "device 1 - omar".tr(),
-            ].map((String items) {
-              return DropdownMenuItem(
-                value: items,
-                child: Text(items),
-              );
-            }).toList(),
-            onChanged: (String? newValue) {},
-          ),
-          const SizedBox(height: 10),
+          const SizedBox(height: 60),
           Row(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
@@ -62,12 +42,20 @@ class _ParentDashboardState extends State<ParentDashboard> {
                 ),
               ),
               Text(
-                "30 min".tr(),
+                "30".tr(),
                 style: TextStyle(
                   color: CustomColors.secondary,
                   fontSize: 20,
                 ),
               ),
+                            Text(
+                " min".tr(),
+                style: const TextStyle(
+                  color: Colors.blueGrey,
+                  fontSize: 20,
+                ),
+              ),
+
             ],
           ),
           const SizedBox(height: 20),
@@ -116,7 +104,9 @@ class _ParentDashboardState extends State<ParentDashboard> {
             ],
           ),
           const SizedBox(height: 60),
-          const RecordingButton(),
+          const RecorderButton(),
+          const SizedBox(height: 60),
+          const PlayerButton(),
         ],
       ),
     );

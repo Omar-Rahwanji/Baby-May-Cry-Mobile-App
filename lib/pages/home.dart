@@ -35,8 +35,11 @@ class _HomePageState extends State<HomePage> {
               ),
               accountName: Text(userData['fullName'].toString()),
               accountEmail: Text(userData['email'].toString()),
-              currentAccountPicture: const Image(
-                image: AssetImage('assets/images/logo.png'),
+              currentAccountPicture: const Hero(
+                tag: "logo",
+                child: Image(
+                  image: AssetImage('assets/images/logo.png'),
+                ),
               ),
             ),
             ListTile(

@@ -3,14 +3,14 @@ import 'package:baby_may_cry/static/colors.dart';
 import 'package:flutter/material.dart';
 import 'package:localize_and_translate/localize_and_translate.dart';
 
-class RecordingButton extends StatefulWidget {
-  const RecordingButton({Key? key}) : super(key: key);
+class RecorderButton extends StatefulWidget {
+  const RecorderButton({Key? key}) : super(key: key);
 
   @override
-  State<RecordingButton> createState() => _RecordingButtonState();
+  State<RecorderButton> createState() => _RecorderButtonState();
 }
 
-class _RecordingButtonState extends State<RecordingButton> {
+class _RecorderButtonState extends State<RecorderButton> {
   final recorder = SoundRecorder();
 
   @override
@@ -55,6 +55,7 @@ class _RecordingButtonState extends State<RecordingButton> {
                 ),
               ),
               IconButton(
+                enableFeedback: true,
                 iconSize: 40,
                 color: CustomColors.primary,
                 icon: Icon(icon),
