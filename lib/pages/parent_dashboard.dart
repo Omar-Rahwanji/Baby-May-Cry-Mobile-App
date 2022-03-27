@@ -1,4 +1,5 @@
 import 'package:baby_may_cry/components/recorder_button.dart';
+import 'package:baby_may_cry/services/api.dart';
 import 'package:flutter/material.dart';
 import 'package:localize_and_translate/localize_and_translate.dart';
 
@@ -13,6 +14,22 @@ class ParentDashboard extends StatefulWidget {
 }
 
 class _ParentDashboardState extends State<ParentDashboard> {
+  String cryReason = "";
+
+  void fetchCryReaon() async {
+    final response = await getCryReason();
+    setState(() {
+      cryReason = response['cryReason'];
+    });
+  }
+
+  @override
+  void initState() {
+    super.initState();
+    
+    fetchCryReaon();
+  }
+
   @override
   Widget build(BuildContext context) {
     return SingleChildScrollView(
@@ -48,14 +65,13 @@ class _ParentDashboardState extends State<ParentDashboard> {
                   fontSize: 20,
                 ),
               ),
-                            Text(
+              Text(
                 " min".tr(),
                 style: const TextStyle(
                   color: Colors.blueGrey,
                   fontSize: 20,
                 ),
               ),
-
             ],
           ),
           const SizedBox(height: 20),
@@ -71,7 +87,7 @@ class _ParentDashboardState extends State<ParentDashboard> {
           ),
           const SizedBox(height: 50),
           Text(
-            "Hungry".tr(),
+            cryReason.tr(),
             style: const TextStyle(
               fontSize: 42,
             ),

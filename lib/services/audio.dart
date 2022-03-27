@@ -1,12 +1,13 @@
 import 'dart:convert';
 import 'dart:io';
 
+import 'package:baby_may_cry/services/api.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter_sound_lite/flutter_sound.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:permission_handler/permission_handler.dart';
 
-const audioFilePath = "/cry.wav";
+const audioFileName = "/cry.wav";
 
 class SoundRecorder {
   static FlutterSoundRecorder? _audioRecorder;
@@ -14,8 +15,13 @@ class SoundRecorder {
 
   bool get isRecording => _audioRecorder!.isRecording;
 
+  late String audioFilePath;
+
   Future init() async {
     _audioRecorder = FlutterSoundRecorder();
+
+    Directory? _downloadsDirectory = await getExternalStorageDirectory();
+    audioFilePath = _downloadsDirectory!.path + audioFileName;
 
     final status = await Permission.microphone.request();
     if (status != PermissionStatus.granted) {
@@ -36,16 +42,16 @@ class SoundRecorder {
 
   Future _record() async {
     if (!_isRecorderInitialised) return;
-    Directory? _downloadsDirectory = await getExternalStorageDirectory();
-    print(_downloadsDirectory!.path);
-    await _audioRecorder!
-        .startRecorder(toFile: _downloadsDirectory.path + audioFilePath);
+    await _audioRecorder!.startRecorder(toFile: audioFilePath);
   }
 
   Future _stop() async {
     if (!_isRecorderInitialised) return;
 
-    await _audioRecorder!.stopRecorder();
+    String? audioFilePath = await _audioRecorder!.stopRecorder();
+
+    print(this.audioFilePath);
+    sendCrySound(this.audioFilePath);
   }
 
   Future toggleRecording() async {
@@ -61,9 +67,13 @@ class SoundPlayer {
   static FlutterSoundPlayer? _audioPlayer;
   bool _isPlayerInitialised = false;
   bool get isPlaying => _audioPlayer!.isPlaying;
+  late String audioFilePath;
 
   Future init() async {
     _audioPlayer = FlutterSoundPlayer();
+
+    Directory? _downloadsDirectory = await getExternalStorageDirectory();
+    audioFilePath = _downloadsDirectory!.path + audioFileName;
 
     await _audioPlayer!.openAudioSession();
     _isPlayerInitialised = true;
@@ -78,10 +88,8 @@ class SoundPlayer {
   }
 
   Future _play(VoidCallback whenFinished) async {
-    Directory? _downloadsDirectory = await getExternalStorageDirectory();
-
     await _audioPlayer!.startPlayer(
-      fromURI: _downloadsDirectory!.path + audioFilePath,
+      fromURI: audioFilePath,
       whenFinished: whenFinished,
     );
   }
