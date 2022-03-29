@@ -5,6 +5,7 @@ import 'package:modal_progress_hud_nsn/modal_progress_hud_nsn.dart';
 
 import '../components/custom_text_field.dart';
 import '../services/auth.dart';
+import '../static/colors.dart';
 
 class ForgotPasswordPage extends StatefulWidget {
   const ForgotPasswordPage({Key? key}) : super(key: key);
@@ -29,92 +30,124 @@ class _ForgotPasswordPageState extends State<ForgotPasswordPage> {
   @override
   Widget build(BuildContext context) {
     final screenWidth = MediaQuery.of(context).size.width;
+    final screenheight = MediaQuery.of(context).size.height;
+
     return Scaffold(
       body: ModalProgressHUD(
         inAsyncCall: showSpinner,
         child: Center(
           child: SingleChildScrollView(
-            child: SizedBox(
-              width: screenWidth * 0.8,
-              child: Form(
-                key: _formKey,
-                child: Column(
-                  mainAxisAlignment: MainAxisAlignment.center,
+            child: Column(
+              children: [
+                SizedBox(
+                  width: screenWidth * 0.8,
+                  child: Form(
+                    key: _formKey,
+                    child: Column(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        SizedBox(height: 100),
+                        Text(
+                          "Reset Password".tr(),
+                          textDirection: TextDirection.rtl,
+                          style: const TextStyle(
+                            color: Colors.black,
+                            fontSize: 32,
+                          ),
+                        ),
+                        SizedBox(height: screenheight * 0.01),
+                        SizedBox(
+                          width: screenWidth * 0.7,
+                          child: Text(
+                            "Hurry up, your baby may cry!".tr(),
+                            textAlign: TextAlign.center,
+                            style: const TextStyle(
+                              fontSize: 18,
+                              color: Colors.blueGrey,
+                            ),
+                          ),
+                        ),
+                        const SizedBox(height: 196),
+                        CustomTextField(
+                          controller: email,
+                          inputType: TextInputType.emailAddress,
+                          hint: "Email".tr(),
+                          isObsecured: false,
+                          isCenteredInput: false,
+                          maxLength: 50,
+                          icon: Icons.email_outlined,
+                        ),
+                        const SizedBox(height: 30),
+                        MaterialButton(
+                          child: Text(
+                            "Reset".tr(),
+                            textDirection: TextDirection.rtl,
+                            style: TextStyle(fontSize: 20),
+                          ),
+                          color: CustomColors.primary,
+                          textColor: Colors.white,
+                          minWidth: screenWidth * 0.9,
+                          padding: EdgeInsets.all(12),
+                          shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(22.0)),
+                          onPressed: () async {
+                            if (_formKey.currentState!.validate()) {
+                              print("validating");
+                              setState(() {
+                                showSpinner = true;
+                              });
+
+                              if (await AuthService.resetPassword(email.text)) {
+                                Fluttertoast.showToast(
+                                  msg:
+                                      'A link for resetting password has been sent succefully to the email'
+                                          .tr(),
+                                  backgroundColor: Colors.green,
+                                );
+
+                                Navigator.pushNamedAndRemoveUntil(
+                                    context, "/login", (route) => false);
+                              } else {
+                                Fluttertoast.showToast(
+                                  msg:
+                                      'Please enter a valid email and try again'
+                                          .tr(),
+                                  backgroundColor: Colors.red,
+                                );
+                              }
+
+                              setState(() {
+                                showSpinner = false;
+                              });
+                            }
+                          },
+                        ),
+                      ],
+                    ),
+                  ),
+                ),
+                Stack(
+                  alignment: AlignmentDirectional.center,
                   children: [
                     Container(
-                      width: 150,
-                      margin: const EdgeInsets.only(bottom: 20),
-                      child: const Hero(
-                        tag: "logo",
-                        child: Image(
-                          image: AssetImage("assets/images/logo.png"),
-                        ),
+                      margin: const EdgeInsets.only(top: 134),
+                      child: Image(
+                        image: const AssetImage("assets/images/border.png"),
+                        fit: BoxFit.fill,
+                        width: screenWidth,
+                        height: 157,
                       ),
                     ),
-                    Text(
-                      "Reset Password".tr(),
-                      textDirection: TextDirection.rtl,
-                      style: const TextStyle(
-                        color: Colors.black,
-                        fontSize: 32,
-                      ),
-                    ),
-                    const SizedBox(height: 25),
-                    const SizedBox(height: 20),
-                    CustomTextField(
-                      controller: email,
-                      inputType: TextInputType.emailAddress,
-                      hint: "Email".tr(),
-                      isObsecured: false,
-                      isCenteredInput: false,
-                      maxLength: 50,
-                      icon: Icons.email_outlined,
-                    ),
-                    const SizedBox(height: 30),
-                    ElevatedButton(
-                      onPressed: () async {
-                        if (_formKey.currentState!.validate()) {
-                          print("validating");
-                          setState(() {
-                            showSpinner = true;
-                          });
-
-                          if (await AuthService.resetPassword(email.text)) {
-                            Fluttertoast.showToast(
-                              msg:
-                                  'A link for resetting password has been sent succefully to the email'
-                                      .tr(),
-                              backgroundColor: Colors.green,
-                            );
-
-                            Navigator.pushNamedAndRemoveUntil(
-                                context, "/login", (route) => false);
-                          } else {
-                            Fluttertoast.showToast(
-                              msg: 'Please enter a valid email and try again'
-                                  .tr(),
-                              backgroundColor: Colors.red,
-                            );
-                          }
-
-                          setState(() {
-                            showSpinner = false;
-                          });
-                        }
-                      },
-                      child: Text(
-                        "Reset".tr(),
-                        textDirection: TextDirection.rtl,
-                      ),
-                      style: ElevatedButton.styleFrom(
-                        minimumSize: const Size.fromHeight(40),
-                        padding: const EdgeInsets.symmetric(
-                            horizontal: 30, vertical: 12),
+                    Hero(
+                      tag: "logo",
+                      child: Image(
+                        image: const AssetImage("assets/images/logo.png"),
+                        width: screenWidth * 0.4,
                       ),
                     ),
                   ],
                 ),
-              ),
+              ],
             ),
           ),
         ),

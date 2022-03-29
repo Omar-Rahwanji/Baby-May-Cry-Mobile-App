@@ -43,9 +43,7 @@ class CustomTextField extends StatelessWidget {
           keyboardType: inputType,
           controller: controller,
           obscureText: isObsecured,
-          textAlign: maxLength == 1
-              ? TextAlign.center
-              : textAlign[(translator.activeLanguageCode == "en") ? 0 : 1],
+          textAlign: textAlign[(translator.activeLanguageCode == "en") ? 0 : 1],
           maxLength: maxLength,
           textInputAction: TextInputAction.next,
           onChanged: (maxLength == 1)
@@ -56,7 +54,7 @@ class CustomTextField extends StatelessWidget {
                 }
               : null,
           decoration: InputDecoration(
-            prefixIcon: (maxLength > 1) ? Icon(icon) : null,
+            prefixIcon: Icon(icon),
             counterText: "",
             filled: true,
             focusedBorder: InputBorder.none,
@@ -72,7 +70,7 @@ class CustomTextField extends StatelessWidget {
               10.0,
             ),
             enabledBorder: OutlineInputBorder(
-              borderRadius: BorderRadius.circular(5.0),
+              borderRadius: BorderRadius.circular(10),
               borderSide: const BorderSide(
                 color: Colors.white,
                 width: 3.0,

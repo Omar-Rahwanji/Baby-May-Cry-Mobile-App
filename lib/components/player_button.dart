@@ -12,6 +12,10 @@ class PlayerButton extends StatefulWidget {
 
 class _PlayerButtonState extends State<PlayerButton> {
   final player = SoundPlayer();
+  final List<TextDirection> textDirection = [
+    TextDirection.ltr,
+    TextDirection.rtl
+  ];
 
   @override
   void initState() {
@@ -72,16 +76,18 @@ class _PlayerButtonState extends State<PlayerButton> {
         const SizedBox(height: 10),
         Row(
           mainAxisAlignment: MainAxisAlignment.center,
+          textDirection: translator.activeLanguageCode == "en"
+              ? textDirection[0]
+              : textDirection[1],
           children: [
             const SizedBox(width: 8),
             Text(
-              "Press to".tr(),
+              "Press to ".tr(),
               style: const TextStyle(
                 color: Colors.blueGrey,
                 fontSize: 16,
               ),
             ),
-            const SizedBox(width: 5),
             Text(
               buttonHint,
               style: TextStyle(

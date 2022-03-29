@@ -10,194 +10,77 @@ class AboutUsPage extends StatelessWidget {
   Widget build(BuildContext context) {
     final screenWidth = MediaQuery.of(context).size.width;
     return Scaffold(
-      appBar: AppBar(
-        title: Text("About us".tr()),
-        centerTitle: true,
-        elevation: 16,
-      ),
+      backgroundColor: Colors.white,
       body: SingleChildScrollView(
-        child: Center(
-          child: SizedBox(
-            width: screenWidth * 0.9,
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.start,
-              crossAxisAlignment: CrossAxisAlignment.center,
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.start,
+          crossAxisAlignment: CrossAxisAlignment.center,
+          children: [
+            const SizedBox(height: 100),
+            SizedBox(
+              width: screenWidth * 0.7,
+              child: Text(
+                "Understand your baby more".tr(),
+                textAlign: TextAlign.center,
+                style: const TextStyle(
+                  fontSize: 34,
+                ),
+              ),
+            ),
+            const SizedBox(height: 20),
+            SizedBox(
+              width: screenWidth * 0.76,
+              child: Text(
+                "Understand the cry reason to act properly. We help by making you sure about your baby's daily needs."
+                    .tr(),
+                textAlign: TextAlign.center,
+                style: const TextStyle(
+                  fontSize: 18,
+                  color: Colors.blueGrey,
+                ),
+              ),
+            ),
+            const SizedBox(height: 35),
+            MaterialButton(
+              onPressed: () {
+                Navigator.pop(context);
+              },
+              child: Text(
+                "START".tr(),
+                style: TextStyle(fontSize: 20),
+              ),
+              color: CustomColors.primary,
+              textColor: Colors.white,
+              minWidth: screenWidth * 0.5,
+              padding: EdgeInsets.all(12),
+              shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(22.0)),
+            ),
+            SizedBox(height: translator.activeLanguageCode == "en" ? 42 : 37),
+            Stack(
+              alignment: AlignmentDirectional.center,
               children: [
                 Container(
-                  width: 150,
-                  margin: const EdgeInsets.only(bottom: 20, top: 20),
-                  child: const Hero(
+                  margin: const EdgeInsets.only(top: 236),
+                  child: Image(
+                    image: const AssetImage("assets/images/border.png"),
+                    fit: BoxFit.fill,
+                    width: screenWidth,
+                    height: 157,
+                  ),
+                ),
+                Container(
+                  child: Hero(
                     tag: "logo",
                     child: Image(
                       image: AssetImage("assets/images/logo.png"),
+                      width: screenWidth * 0.8,
                     ),
                   ),
                 ),
-                Text(
-                  "Arrow Business Services".tr(),
-                  textAlign: TextAlign.center,
-                  style: TextStyle(
-                    color: CustomColors.secondary,
-                    fontSize: 32,
-                  ),
-                ),
-                const SizedBox(height: 15),
-                Material(
-                  borderRadius: BorderRadius.circular(20),
-                  type: MaterialType.card,
-                  elevation: 5,
-                  child: Container(
-                    padding: const EdgeInsets.all(15),
-                    width: screenWidth * 0.95,
-                    child: Column(
-                      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Container(
-                          margin: const EdgeInsets.symmetric(vertical: 10),
-                          child: Row(
-                            crossAxisAlignment: CrossAxisAlignment.center,
-                            children: [
-                              if (translator.activeLanguageCode == "en")
-                                const Icon(
-                                  Icons.calendar_month,
-                                  color: Colors.green,
-                                  size: 30,
-                                ),
-                              const SizedBox(width: 10),
-                              Expanded(
-                                child: Text(
-                                  "a private VIP service provider that was established back in 1999, being the second VIP service provider establishment in the Middle East."
-                                      .tr(),
-                                  textAlign: textAlign[
-                                      (translator.activeLanguageCode == "en")
-                                          ? 0
-                                          : 1],
-                                  style: const TextStyle(
-                                    fontSize: 20,
-                                  ),
-                                ),
-                              ),
-                              const SizedBox(width: 10),
-                              if (translator.activeLanguageCode == "ar")
-                                const Icon(
-                                  Icons.calendar_month_outlined,
-                                  color: Colors.green,
-                                  size: 30,
-                                ),
-                            ],
-                          ),
-                        ),
-                      ],
-                    ),
-                  ),
-                ),
-                const SizedBox(height: 30),
-                Material(
-                  borderRadius: BorderRadius.circular(20),
-                  type: MaterialType.card,
-                  elevation: 5,
-                  child: Container(
-                    padding: const EdgeInsets.all(15),
-                    width: screenWidth * 0.95,
-                    child: Column(
-                      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Container(
-                          margin: const EdgeInsets.symmetric(vertical: 10),
-                          child: Row(
-                            crossAxisAlignment: CrossAxisAlignment.center,
-                            children: [
-                              if (translator.activeLanguageCode == "en")
-                                const Icon(
-                                  Icons.location_pin,
-                                  color: Colors.green,
-                                  size: 30,
-                                ),
-                              const SizedBox(width: 10),
-                              Expanded(
-                                child: Text(
-                                  "a professional service provider that ensures you cross the borders between Jordan and Palestine/Israel, easily, hassle-free, safe, and most of all in the least time possible."
-                                      .tr(),
-                                  textAlign: textAlign[
-                                      (translator.activeLanguageCode == "en")
-                                          ? 0
-                                          : 1],
-                                  style: const TextStyle(
-                                    fontSize: 20,
-                                  ),
-                                ),
-                              ),
-                              const SizedBox(width: 10),
-                              if (translator.activeLanguageCode == "ar")
-                                const Icon(
-                                  Icons.location_pin,
-                                  color: Colors.green,
-                                  size: 30,
-                                ),
-                            ],
-                          ),
-                        ),
-                      ],
-                    ),
-                  ),
-                ),
-                const SizedBox(height: 30),
-                Material(
-                  borderRadius: BorderRadius.circular(20),
-                  type: MaterialType.card,
-                  elevation: 5,
-                  child: Container(
-                    padding: const EdgeInsets.all(15),
-                    width: screenWidth * 0.95,
-                    child: Column(
-                      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Container(
-                          margin: const EdgeInsets.symmetric(vertical: 10),
-                          child: Row(
-                            crossAxisAlignment: CrossAxisAlignment.center,
-                            children: [
-                              if (translator.activeLanguageCode == "en")
-                                const Icon(
-                                  Icons.people,
-                                  color: Colors.green,
-                                  size: 30,
-                                ),
-                              const SizedBox(width: 10),
-                              Expanded(
-                                child: Text(
-                                  "employees are extremely professional ensuring your comfort, safety, and convenience as priority. Each passenger or family gets to travel in their own private car that is clean, spacious, and with well experienced drivers. From the moment you enter our lounge, until you cross the border everything is attended to through our services."
-                                      .tr(),
-                                  textAlign: textAlign[
-                                      (translator.activeLanguageCode == "en")
-                                          ? 0
-                                          : 1],
-                                  style: const TextStyle(
-                                    fontSize: 20,
-                                  ),
-                                ),
-                              ),
-                              const SizedBox(width: 10),
-                              if (translator.activeLanguageCode == "ar")
-                                const Icon(
-                                  Icons.people,
-                                  color: Colors.green,
-                                  size: 30,
-                                ),
-                            ],
-                          ),
-                        ),
-                      ],
-                    ),
-                  ),
-                ),
-                const SizedBox(height: 30),
               ],
             ),
-          ),
+          ],
         ),
       ),
     );

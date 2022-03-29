@@ -33,14 +33,14 @@ Future<bool> sendCrySound(String crySoundPath) async {
   if (response.statusCode == 200) {
     print(await response.stream.bytesToString());
     Fluttertoast.showToast(
-      msg: "Your reservation has sent successfully".tr(),
+      msg: "Cry sound has been saved successfully".tr(),
       backgroundColor: Colors.green,
     );
     return false;
   } else {
     print(response.reasonPhrase);
     Fluttertoast.showToast(
-      msg: "Failed sending your reservation".tr(),
+      msg: "Failed saving the cry sound".tr(),
       backgroundColor: Colors.red,
     );
     return false;

@@ -33,138 +33,177 @@ class _SignupPageState extends State<SignupPage> {
   @override
   Widget build(BuildContext context) {
     final screenWidth = MediaQuery.of(context).size.width;
+    final screenheight = MediaQuery.of(context).size.height;
+
     return Scaffold(
       body: ModalProgressHUD(
         inAsyncCall: showSpinner,
         child: Center(
           child: SingleChildScrollView(
-            child: SizedBox(
-              width: screenWidth * 0.8,
-              child: Form(
-                key: _formKey,
-                child: Column(
-                  mainAxisAlignment: MainAxisAlignment.center,
+            child: Column(
+              children: [
+                SizedBox(
+                  width: screenWidth * 0.8,
+                  child: Form(
+                    key: _formKey,
+                    child: Column(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        SizedBox(height: screenheight * 0.1),
+                        Text(
+                          "Sign up".tr(),
+                          style: const TextStyle(
+                            color: Colors.black,
+                            fontSize: 32,
+                          ),
+                        ),
+                        SizedBox(height: screenheight * 0.01),
+                        SizedBox(
+                          width: screenWidth * 0.7,
+                          child: Text(
+                            "Welcome. Register now, because your baby may cry!"
+                                .tr(),
+                            textAlign: TextAlign.center,
+                            style: const TextStyle(
+                              fontSize: 18,
+                              color: Colors.blueGrey,
+                            ),
+                          ),
+                        ),
+                        SizedBox(height: screenheight * 0.05),
+                        CustomTextField(
+                          controller: firstName,
+                          inputType: TextInputType.name,
+                          hint: "First Name".tr(),
+                          isObsecured: false,
+                          isCenteredInput: false,
+                          maxLength: 20,
+                          icon: Icons.person_outlined,
+                        ),
+                        const SizedBox(height: 20),
+                        CustomTextField(
+                          controller: lastName,
+                          inputType: TextInputType.name,
+                          hint: "Last Name".tr(),
+                          isObsecured: false,
+                          isCenteredInput: false,
+                          maxLength: 20,
+                          icon: Icons.person_outlined,
+                        ),
+                        const SizedBox(height: 20),
+                        CustomTextField(
+                          controller: email,
+                          inputType: TextInputType.emailAddress,
+                          hint: "Email".tr(),
+                          isObsecured: false,
+                          isCenteredInput: false,
+                          maxLength: 50,
+                          icon: Icons.email_outlined,
+                        ),
+                        const SizedBox(height: 20),
+                        CustomTextField(
+                          controller: password,
+                          inputType: TextInputType.text,
+                          hint: "Password".tr(),
+                          isObsecured: true,
+                          isCenteredInput: false,
+                          maxLength: 50,
+                          icon: Icons.lock,
+                        ),
+                        const SizedBox(height: 30),
+                        MaterialButton(
+                          child: Text(
+                            "Sign up".tr(),
+                            style: TextStyle(fontSize: 20),
+                          ),
+                          color: CustomColors.primary,
+                          textColor: Colors.white,
+                          minWidth: screenWidth * 0.9,
+                          padding: EdgeInsets.all(12),
+                          shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(22.0)),
+                          onPressed: () async {
+                            if (_formKey.currentState!.validate()) {
+                              print("validating");
+                              setState(() {
+                                showSpinner = true;
+                              });
+
+                              Map<String, String> userData = {
+                                'email': email.text,
+                                'fullName':
+                                    firstName.text + ' ' + lastName.text,
+                              };
+                              if (await AuthService.signup(
+                                  userData, password.text)) {
+                                Navigator.pushNamedAndRemoveUntil(
+                                    context, "/home", (route) => false,
+                                    arguments: {
+                                      'email': userData['email'],
+                                      'fullName': userData['fullName']
+                                    });
+                              } else {
+                                Fluttertoast.showToast(
+                                  msg: 'Registeration failed, please try again',
+                                  backgroundColor: Colors.red,
+                                );
+                              }
+
+                              setState(() {
+                                showSpinner = false;
+                              });
+                            }
+                          },
+                        ),
+                        const SizedBox(height: 20),
+                        Row(
+                          textDirection: (translator.activeLanguageCode == "en")
+                              ? TextDirection.ltr
+                              : TextDirection.rtl,
+                          mainAxisSize: MainAxisSize.max,
+                          children: <Widget>[
+                            Text("Already have account?".tr()),
+                            const SizedBox(width: 8),
+                            InkWell(
+                                child: Text(
+                                  "Login".tr(),
+                                  style: TextStyle(
+                                    color: CustomColors.primary,
+                                    fontSize: 18,
+                                  ),
+                                ),
+                                onTap: () => Navigator.pushNamedAndRemoveUntil(
+                                    context, "/login", (route) => false)),
+                          ],
+                        ),
+                      ],
+                    ),
+                  ),
+                ),
+                Stack(
+                  alignment: AlignmentDirectional.center,
                   children: [
                     Container(
-                      width: 150,
-                      margin: const EdgeInsets.only(bottom: 20),
-                      child: const Hero(
+                      margin: const EdgeInsets.only(top: 47),
+                      child: Image(
+                        image: const AssetImage("assets/images/border.png"),
+                        fit: BoxFit.fill,
+                        width: screenWidth,
+                        height: 157,
+                      ),
+                    ),
+                    Container(
+                      child: Hero(
                         tag: "logo",
                         child: Image(
                           image: AssetImage("assets/images/logo.png"),
+                          width: screenWidth * 0.4,
                         ),
                       ),
                     ),
-                    Text(
-                      "Sign up".tr(),
-                      style: const TextStyle(
-                        color: Colors.black,
-                        fontSize: 32,
-                      ),
-                    ),
-                    const SizedBox(height: 25),
-                    CustomTextField(
-                      controller: firstName,
-                      inputType: TextInputType.name,
-                      hint: "First Name".tr(),
-                      isObsecured: false,
-                      isCenteredInput: false,
-                      maxLength: 20,
-                      icon: Icons.person_outlined,
-                    ),
-                    const SizedBox(height: 20),
-                    CustomTextField(
-                      controller: lastName,
-                      inputType: TextInputType.name,
-                      hint: "Last Name".tr(),
-                      isObsecured: false,
-                      isCenteredInput: false,
-                      maxLength: 20,
-                      icon: Icons.person_outlined,
-                    ),
-                    const SizedBox(height: 20),
-                    CustomTextField(
-                      controller: email,
-                      inputType: TextInputType.emailAddress,
-                      hint: "Email".tr(),
-                      isObsecured: false,
-                      isCenteredInput: false,
-                      maxLength: 50,
-                      icon: Icons.email_outlined,
-                    ),
-                    const SizedBox(height: 20),
-                    CustomTextField(
-                      controller: password,
-                      inputType: TextInputType.text,
-                      hint: "Password".tr(),
-                      isObsecured: true,
-                      isCenteredInput: false,
-                      maxLength: 50,
-                      icon: Icons.lock,
-                    ),
-                    const SizedBox(height: 30),
-                    ElevatedButton(
-                      onPressed: () async {
-                        if (_formKey.currentState!.validate()) {
-                          print("validating");
-                          setState(() {
-                            showSpinner = true;
-                          });
-
-                          Map<String, String> userData = {
-                            'email': email.text,
-                            'fullName': firstName.text + ' ' + lastName.text,
-                          };
-                          if (await AuthService.signup(
-                              userData, password.text)) {
-                            Navigator.pushNamedAndRemoveUntil(
-                                context, "/home", (route) => false, arguments: {
-                              'email': userData['email'],
-                              'fullName': userData['fullName']
-                            });
-                          } else {
-                            Fluttertoast.showToast(
-                              msg: 'Registeration failed, please try again',
-                              backgroundColor: Colors.red,
-                            );
-                          }
-
-                          setState(() {
-                            showSpinner = false;
-                          });
-                        }
-                      },
-                      child: Text("Sign up".tr()),
-                      style: ElevatedButton.styleFrom(
-                        minimumSize: const Size.fromHeight(40),
-                        padding: const EdgeInsets.symmetric(
-                            horizontal: 30, vertical: 12),
-                      ),
-                    ),
-                    const SizedBox(height: 20),
-                    Row(
-                      textDirection: (translator.activeLanguageCode == "en")
-                          ? TextDirection.ltr
-                          : TextDirection.rtl,
-                      mainAxisSize: MainAxisSize.max,
-                      children: <Widget>[
-                        Text("HaveAccount".tr()),
-                        const SizedBox(width: 8),
-                        InkWell(
-                            child: Text(
-                              "Login".tr(),
-                              style: TextStyle(
-                                color: CustomColors.primary,
-                                fontSize: 18,
-                              ),
-                            ),
-                            onTap: () => Navigator.pushNamedAndRemoveUntil(
-                                context, "/login", (route) => false)),
-                      ],
-                    ),
                   ],
                 ),
-              ),
+              ],
             ),
           ),
         ),

@@ -18,7 +18,7 @@ class _HomePageState extends State<HomePage> {
   List<Widget> navPages = [
     const ParentDashboard(),
     const GenerateReportPage(),
-    const ProfilePage()
+    const GenerateReportPage()
   ];
 
   @override
