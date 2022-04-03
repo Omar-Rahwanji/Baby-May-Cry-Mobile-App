@@ -23,7 +23,7 @@ class _ParentDashboardState extends State<ParentDashboard> {
   void fetchCryReaon() async {
     final response = await getCryReason();
     setState(() {
-      cryReason = response['cryReason'];
+      cryReason = response['cryReason'].toString().tr();
     });
   }
 

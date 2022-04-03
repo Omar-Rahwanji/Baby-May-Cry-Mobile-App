@@ -59,5 +59,10 @@
     "Failed saving the cry sound":"فشلت عملية تسجيل صوت البكاء",
     "Understand your baby more":"نساعدك على فهم طفلك",
     "Understand the cry reason to act properly. We help by making you sure about your baby's daily needs.":"افهم الأسباب التي تجعل طفلك يبكي. نحن نساعدك على الفهم العميق لاحتياجات طفلك اليومية",
-    "START":"ابدأ"
+    "START":"ابدأ",
+    "Belly Pain":"آلام بطن", 
+    "Burping":"التجشؤ",
+    "Discomfort":"عدم الارتياح",
+    "Hungry":"الجوع", 
+    "Tired":"التعب"
 }
