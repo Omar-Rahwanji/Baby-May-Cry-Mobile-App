@@ -46,7 +46,11 @@ class _ForgotPasswordPageState extends State<ForgotPasswordPage> {
                     child: Column(
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
-                        SizedBox(height: 100),
+                        SizedBox(
+                          height: translator.activeLanguageCode == "ar"
+                              ? screenheight * 0.12
+                              : screenheight * 0.12,
+                        ),
                         Text(
                           "Reset Password".tr(),
                           textDirection: TextDirection.rtl,
@@ -67,7 +71,7 @@ class _ForgotPasswordPageState extends State<ForgotPasswordPage> {
                             ),
                           ),
                         ),
-                        const SizedBox(height: 196),
+                        SizedBox(height: screenheight * 0.25),
                         CustomTextField(
                           controller: email,
                           inputType: TextInputType.emailAddress,
@@ -77,17 +81,17 @@ class _ForgotPasswordPageState extends State<ForgotPasswordPage> {
                           maxLength: 50,
                           icon: Icons.email_outlined,
                         ),
-                        const SizedBox(height: 30),
+                        SizedBox(height: screenheight * 0.02),
                         MaterialButton(
                           child: Text(
                             "Reset".tr(),
                             textDirection: TextDirection.rtl,
-                            style: TextStyle(fontSize: 20),
+                            style: const TextStyle(fontSize: 20),
                           ),
                           color: CustomColors.primary,
                           textColor: Colors.white,
                           minWidth: screenWidth * 0.9,
-                          padding: EdgeInsets.all(12),
+                          padding: EdgeInsets.all(screenheight * 0.016),
                           shape: RoundedRectangleBorder(
                               borderRadius: BorderRadius.circular(22.0)),
                           onPressed: () async {
@@ -130,12 +134,16 @@ class _ForgotPasswordPageState extends State<ForgotPasswordPage> {
                   alignment: AlignmentDirectional.center,
                   children: [
                     Container(
-                      margin: const EdgeInsets.only(top: 134),
+                      margin: EdgeInsets.only(
+                        top: translator.activeLanguageCode == "en"
+                            ? screenheight * 0.199
+                            : screenheight * 0.199,
+                      ),
                       child: Image(
                         image: const AssetImage("assets/images/border.png"),
                         fit: BoxFit.fill,
                         width: screenWidth,
-                        height: 157,
+                        height: screenheight * 0.201,
                       ),
                     ),
                     Hero(

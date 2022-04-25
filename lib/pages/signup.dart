@@ -80,7 +80,7 @@ class _SignupPageState extends State<SignupPage> {
                           maxLength: 20,
                           icon: Icons.person_outlined,
                         ),
-                        const SizedBox(height: 20),
+                        SizedBox(height: screenheight * 0.025),
                         CustomTextField(
                           controller: lastName,
                           inputType: TextInputType.name,
@@ -90,7 +90,7 @@ class _SignupPageState extends State<SignupPage> {
                           maxLength: 20,
                           icon: Icons.person_outlined,
                         ),
-                        const SizedBox(height: 20),
+                        SizedBox(height: screenheight * 0.025),
                         CustomTextField(
                           controller: email,
                           inputType: TextInputType.emailAddress,
@@ -100,7 +100,7 @@ class _SignupPageState extends State<SignupPage> {
                           maxLength: 50,
                           icon: Icons.email_outlined,
                         ),
-                        const SizedBox(height: 20),
+                        SizedBox(height: screenheight * 0.025),
                         CustomTextField(
                           controller: password,
                           inputType: TextInputType.text,
@@ -110,16 +110,16 @@ class _SignupPageState extends State<SignupPage> {
                           maxLength: 50,
                           icon: Icons.lock,
                         ),
-                        const SizedBox(height: 30),
+                        SizedBox(height: screenheight * 0.025),
                         MaterialButton(
                           child: Text(
                             "Sign up".tr(),
-                            style: TextStyle(fontSize: 20),
+                            style: const TextStyle(fontSize: 20),
                           ),
                           color: CustomColors.primary,
                           textColor: Colors.white,
                           minWidth: screenWidth * 0.9,
-                          padding: EdgeInsets.all(12),
+                          padding: EdgeInsets.all(screenheight * 0.016),
                           shape: RoundedRectangleBorder(
                               borderRadius: BorderRadius.circular(22.0)),
                           onPressed: () async {
@@ -155,7 +155,7 @@ class _SignupPageState extends State<SignupPage> {
                             }
                           },
                         ),
-                        const SizedBox(height: 20),
+                        SizedBox(height: screenheight * 0.025),
                         Row(
                           textDirection: (translator.activeLanguageCode == "en")
                               ? TextDirection.ltr
@@ -163,7 +163,7 @@ class _SignupPageState extends State<SignupPage> {
                           mainAxisSize: MainAxisSize.max,
                           children: <Widget>[
                             Text("Already have account?".tr()),
-                            const SizedBox(width: 8),
+                            SizedBox(width: screenWidth * 0.02),
                             InkWell(
                                 child: Text(
                                   "Login".tr(),
@@ -184,21 +184,21 @@ class _SignupPageState extends State<SignupPage> {
                   alignment: AlignmentDirectional.center,
                   children: [
                     Container(
-                      margin: const EdgeInsets.only(top: 47),
+                      margin: EdgeInsets.only(top: screenheight * 0.076),
                       child: Image(
                         image: const AssetImage("assets/images/border.png"),
                         fit: BoxFit.fill,
                         width: screenWidth,
-                        height: 157,
+                        height: translator.activeLanguageCode == "en"
+                            ? screenheight * 0.201
+                            : screenheight * 0.197,
                       ),
                     ),
-                    Container(
-                      child: Hero(
-                        tag: "logo",
-                        child: Image(
-                          image: AssetImage("assets/images/logo.png"),
-                          width: screenWidth * 0.4,
-                        ),
+                    Hero(
+                      tag: "logo",
+                      child: Image(
+                        image: const AssetImage("assets/images/logo.png"),
+                        width: screenWidth * 0.4,
                       ),
                     ),
                   ],

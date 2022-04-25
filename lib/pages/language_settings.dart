@@ -16,12 +16,14 @@ class _LanguageSettingsPageState extends State<LanguageSettingsPage> {
   @override
   Widget build(BuildContext context) {
     double screenWidth = MediaQuery.of(context).size.width;
+    double screenHeight = MediaQuery.of(context).size.height;
+
     return Scaffold(
       body: SingleChildScrollView(
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.center,
           children: [
-            const SizedBox(height: 100),
+            SizedBox(height: screenHeight * 0.128),
             SizedBox(
               width: screenWidth * 0.7,
               child: Text(
@@ -32,21 +34,21 @@ class _LanguageSettingsPageState extends State<LanguageSettingsPage> {
                 ),
               ),
             ),
-            const SizedBox(height: 100),
+            SizedBox(height: screenHeight * 0.128),
             Row(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
                 if (translator.activeLanguageCode == "en")
                   Text("Choose the language".tr()),
-                const SizedBox(width: 10),
+                SizedBox(width: screenWidth * 0.05),
                 DropdownButton(
                   isDense: true,
                   elevation: 16,
                   iconEnabledColor: CustomColors.primary,
                   value: currentLanguage,
-                  icon: const Icon(
+                  icon: Icon(
                     Icons.arrow_drop_down,
-                    size: 26,
+                    size: screenWidth * 0.07,
                   ),
                   items: ["English", "العربية"].map((String items) {
                     return DropdownMenuItem(
@@ -66,7 +68,7 @@ class _LanguageSettingsPageState extends State<LanguageSettingsPage> {
                   Text("Choose the language".tr()),
               ],
             ),
-            const SizedBox(height: 50),
+            SizedBox(height: screenHeight * 0.0635),
             MaterialButton(
               child: Text(
                 "Change".tr(),
@@ -75,37 +77,40 @@ class _LanguageSettingsPageState extends State<LanguageSettingsPage> {
               color: CustomColors.primary,
               textColor: Colors.white,
               minWidth: screenWidth * 0.9,
-              padding: EdgeInsets.all(12),
+              padding: EdgeInsets.all(screenWidth * 0.027),
               shape: RoundedRectangleBorder(
                   borderRadius: BorderRadius.circular(22.0)),
               onPressed: () {
-                translator.setNewLanguage(context,
-                    newLanguage: currentLanguage == "English" ? "en" : "ar",
-                    remember: true,
-                    restart: true);
+                translator.setNewLanguage(
+                  context,
+                  newLanguage: currentLanguage == "English" ? "en" : "ar",
+                  remember: true,
+                  restart: true,
+                );
               },
             ),
-            SizedBox(height: translator.activeLanguageCode == "ar" ? 161 : 122),
+            SizedBox(
+              height: translator.activeLanguageCode == "ar"
+                  ? screenHeight * 0.2066
+                  : screenHeight * 0.1567,
+            ),
             Stack(
               alignment: AlignmentDirectional.center,
               children: [
                 Container(
-                  margin: const EdgeInsets.only(top: 100),
+                  margin: EdgeInsets.only(top: screenHeight * 0.128),
                   child: Image(
                     image: const AssetImage("assets/images/border.png"),
                     fit: BoxFit.fill,
                     width: screenWidth,
-                    height: 157,
+                    height: screenHeight * 0.2009,
                   ),
                 ),
-                Container(
-                  // margin: const EdgeInsets.only(bottom: 30),
-                  child: Hero(
-                    tag: "logo",
-                    child: Image(
-                      image: AssetImage("assets/images/logo.png"),
-                      width: screenWidth * 0.4,
-                    ),
+                Hero(
+                  tag: "logo",
+                  child: Image(
+                    image: const AssetImage("assets/images/logo.png"),
+                    width: screenWidth * 0.4,
                   ),
                 ),
               ],

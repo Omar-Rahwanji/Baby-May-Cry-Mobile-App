@@ -9,6 +9,8 @@ class AboutUsPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final screenWidth = MediaQuery.of(context).size.width;
+    final screenHeight = MediaQuery.of(context).size.height;
+
     return Scaffold(
       backgroundColor: Colors.white,
       body: SingleChildScrollView(
@@ -16,7 +18,7 @@ class AboutUsPage extends StatelessWidget {
           mainAxisAlignment: MainAxisAlignment.start,
           crossAxisAlignment: CrossAxisAlignment.center,
           children: [
-            const SizedBox(height: 100),
+            SizedBox(height: screenHeight * 0.1),
             SizedBox(
               width: screenWidth * 0.7,
               child: Text(
@@ -27,7 +29,7 @@ class AboutUsPage extends StatelessWidget {
                 ),
               ),
             ),
-            const SizedBox(height: 20),
+            SizedBox(height: screenHeight * 0.054),
             SizedBox(
               width: screenWidth * 0.76,
               child: Text(
@@ -40,42 +42,42 @@ class AboutUsPage extends StatelessWidget {
                 ),
               ),
             ),
-            const SizedBox(height: 35),
+            SizedBox(height: screenHeight * 0.044),
             MaterialButton(
               onPressed: () {
-                Navigator.pop(context);
+                Navigator.pushNamed(context, "/guide1");
               },
               child: Text(
                 "START".tr(),
-                style: TextStyle(fontSize: 20),
+                style: const TextStyle(fontSize: 20),
               ),
               color: CustomColors.primary,
               textColor: Colors.white,
               minWidth: screenWidth * 0.5,
-              padding: EdgeInsets.all(12),
+              padding: EdgeInsets.all(screenWidth * 0.03),
               shape: RoundedRectangleBorder(
                   borderRadius: BorderRadius.circular(22.0)),
             ),
-            SizedBox(height: translator.activeLanguageCode == "en" ? 42 : 37),
+            SizedBox(height: screenHeight * 0.0475),
             Stack(
               alignment: AlignmentDirectional.center,
               children: [
                 Container(
-                  margin: const EdgeInsets.only(top: 236),
+                  margin: EdgeInsets.only(top: screenHeight * 0.302),
                   child: Image(
                     image: const AssetImage("assets/images/border.png"),
                     fit: BoxFit.fill,
                     width: screenWidth,
-                    height: 157,
+                    height: translator.activeLanguageCode == "en"
+                        ? screenHeight * 0.2073
+                        : screenHeight * 0.2009,
                   ),
                 ),
-                Container(
-                  child: Hero(
-                    tag: "logo",
-                    child: Image(
-                      image: AssetImage("assets/images/logo.png"),
-                      width: screenWidth * 0.8,
-                    ),
+                Hero(
+                  tag: "logo",
+                  child: Image(
+                    image: const AssetImage("assets/images/logo.png"),
+                    width: screenWidth * 0.8,
                   ),
                 ),
               ],

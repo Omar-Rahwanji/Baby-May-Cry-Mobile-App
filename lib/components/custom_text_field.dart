@@ -28,11 +28,11 @@ class CustomTextField extends StatelessWidget {
     return Directionality(
       textDirection: TextDirection.ltr,
       child: Container(
-        decoration: const BoxDecoration(
+        decoration: BoxDecoration(
           boxShadow: [
             BoxShadow(
-              color: Colors.grey,
-              blurRadius: 40,
+              color: Colors.black.withOpacity(0.6),
+              blurRadius: 10,
             ),
           ],
         ),

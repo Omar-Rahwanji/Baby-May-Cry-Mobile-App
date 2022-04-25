@@ -37,9 +37,31 @@ class _LoginPageState extends State<LoginPage> {
   @override
   Widget build(BuildContext context) {
     final screenWidth = MediaQuery.of(context).size.width;
-    final screenheight = MediaQuery.of(context).size.height;
+    final screenHeight = MediaQuery.of(context).size.height;
 
     return Scaffold(
+      appBar: AppBar(
+        backgroundColor: Colors.white,
+        leading: Builder(
+          builder: (BuildContext context) {
+            return const SizedBox();
+          },
+        ),
+        elevation: 0,
+        centerTitle: true,
+        toolbarHeight: screenHeight * 0.05,
+        actions: [
+          IconButton(
+            iconSize: screenWidth * 0.08,
+            color: Colors.grey,
+            padding: EdgeInsets.only(right: screenWidth * 0.005),
+            icon: const Icon(Icons.info_outline),
+            onPressed: () {
+              Navigator.pushNamed(context, "/about-us");
+            },
+          ),
+        ],
+      ),
       body: ModalProgressHUD(
         inAsyncCall: showSpinner,
         child: Container(
@@ -57,40 +79,42 @@ class _LoginPageState extends State<LoginPage> {
                       child: Column(
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: [
-                          SizedBox(
-                            height: screenheight * 0.1,
-                          ),
-                          ToggleButtons(
-                              selectedColor: CustomColors.primary,
-                              children: const [
-                                Padding(
-                                  padding:
-                                      EdgeInsets.symmetric(horizontal: 5.0),
-                                  child: Text("العربية"),
-                                ),
-                                Padding(
-                                  padding:
-                                      EdgeInsets.symmetric(horizontal: 5.0),
-                                  child: Text("English"),
-                                ),
-                              ],
-                              isSelected: isSelected,
-                              onPressed: (index) {
-                                setState(() {
-                                  isSelected[index] = !isSelected[index];
-                                });
+                          Row(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: [
+                              ToggleButtons(
+                                  selectedColor: CustomColors.primary,
+                                  children: [
+                                    Padding(
+                                      padding: EdgeInsets.symmetric(
+                                          horizontal: screenWidth * 0.01),
+                                      child: const Text("العربية"),
+                                    ),
+                                    Padding(
+                                      padding: EdgeInsets.symmetric(
+                                          horizontal: screenWidth * 0.01),
+                                      child: const Text("English"),
+                                    ),
+                                  ],
+                                  isSelected: isSelected,
+                                  onPressed: (index) {
+                                    setState(() {
+                                      isSelected[index] = !isSelected[index];
+                                    });
 
-                                translator.setNewLanguage(
-                                  context,
-                                  newLanguage:
-                                      translator.activeLanguageCode == "en"
-                                          ? "ar"
-                                          : "en",
-                                  remember: true,
-                                  restart: true,
-                                );
-                              }),
-                          SizedBox(height: screenheight * 0.03),
+                                    translator.setNewLanguage(
+                                      context,
+                                      newLanguage:
+                                          translator.activeLanguageCode == "en"
+                                              ? "ar"
+                                              : "en",
+                                      remember: true,
+                                      restart: true,
+                                    );
+                                  }),
+                            ],
+                          ),
+                          SizedBox(height: screenHeight * 0.03),
                           Text(
                             "Login".tr(),
                             style: const TextStyle(
@@ -98,7 +122,7 @@ class _LoginPageState extends State<LoginPage> {
                                 fontSize: 32,
                                 fontWeight: FontWeight.bold),
                           ),
-                          SizedBox(height: screenheight * 0.01),
+                          SizedBox(height: screenHeight * 0.01),
                           SizedBox(
                             width: screenWidth * 0.7,
                             child: Text(
@@ -110,7 +134,7 @@ class _LoginPageState extends State<LoginPage> {
                               ),
                             ),
                           ),
-                          SizedBox(height: screenheight * 0.1),
+                          SizedBox(height: screenHeight * 0.07),
                           CustomTextField(
                             controller: email,
                             inputType: TextInputType.emailAddress,
@@ -120,7 +144,7 @@ class _LoginPageState extends State<LoginPage> {
                             maxLength: 50,
                             icon: Icons.email_outlined,
                           ),
-                          const SizedBox(height: 25),
+                          SizedBox(height: screenHeight * 0.025),
                           CustomTextField(
                             controller: password,
                             inputType: TextInputType.text,
@@ -130,7 +154,7 @@ class _LoginPageState extends State<LoginPage> {
                             maxLength: 50,
                             icon: Icons.lock,
                           ),
-                          const SizedBox(height: 5),
+                          SizedBox(height: screenHeight * 0.02),
                           Align(
                             alignment: translator.activeLanguageCode == 'en'
                                 ? Alignment.centerLeft
@@ -152,18 +176,19 @@ class _LoginPageState extends State<LoginPage> {
                                   context, "/forgot-password"),
                             ),
                           ),
-                          const SizedBox(height: 35),
+                          SizedBox(height: screenHeight * 0.05),
                           MaterialButton(
                             child: Text(
                               "Login".tr(),
-                              style: TextStyle(fontSize: 20),
+                              style: const TextStyle(fontSize: 20),
                             ),
                             color: CustomColors.primary,
                             textColor: Colors.white,
                             minWidth: screenWidth * 0.9,
-                            padding: EdgeInsets.all(12),
+                            padding: EdgeInsets.all(screenWidth * 0.027),
                             shape: RoundedRectangleBorder(
-                                borderRadius: BorderRadius.circular(22)),
+                              borderRadius: BorderRadius.circular(22),
+                            ),
                             onPressed: () async {
                               if (_formKey.currentState!.validate()) {
                                 setState(() {
@@ -195,7 +220,7 @@ class _LoginPageState extends State<LoginPage> {
                               }
                             },
                           ),
-                          const SizedBox(height: 25),
+                          SizedBox(height: screenHeight * 0.02),
                           Row(
                             textDirection:
                                 (translator.activeLanguageCode == "en")
@@ -204,7 +229,7 @@ class _LoginPageState extends State<LoginPage> {
                             mainAxisSize: MainAxisSize.max,
                             children: <Widget>[
                               Text("Don't have an account?".tr()),
-                              const SizedBox(width: 8),
+                              SizedBox(width: screenWidth * 0.02),
                               InkWell(
                                 child: Text(
                                   "Sign up now".tr(),
@@ -226,16 +251,20 @@ class _LoginPageState extends State<LoginPage> {
                     alignment: AlignmentDirectional.center,
                     children: [
                       Container(
-                        margin: const EdgeInsets.only(top: 30),
+                        margin: EdgeInsets.only(
+                          top: translator.activeLanguageCode == "en"
+                              ? screenHeight * 0.039
+                              : screenHeight * 0.0609,
+                        ),
                         child: Image(
                           image: const AssetImage("assets/images/border.png"),
                           fit: BoxFit.fill,
                           width: screenWidth,
-                          height: 157,
+                          height: screenHeight * 0.201,
                         ),
                       ),
                       Container(
-                        margin: const EdgeInsets.only(bottom: 30),
+                        margin: EdgeInsets.only(bottom: screenHeight * 0.04),
                         child: Hero(
                           tag: "logo",
                           child: Image(

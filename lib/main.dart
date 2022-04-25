@@ -1,12 +1,17 @@
-import 'package:baby_may_cry/pages/forgot_password.dart';
-
-import 'pages/about_us.dart';
+import './pages/forgot_password.dart';
+import './pages/about_us.dart';
 import './pages/home.dart';
-import 'pages/language_settings.dart';
+import './pages/language_settings.dart';
 import './pages/login.dart';
 import './pages/profile.dart';
 import './pages/signup.dart';
-import 'pages/splash_screen.dart';
+import './pages/splash_screen.dart';
+import './pages/guide_page1.dart';
+import './pages/guide_page2.dart';
+import './pages/guide_page3.dart';
+import './pages/guide_page4.dart';
+import './pages/guide_page5.dart';
+
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:localize_and_translate/localize_and_translate.dart';
@@ -73,6 +78,26 @@ class MyApp extends StatelessWidget {
         '/about-us': (context) => Directionality(
               textDirection: TextDirection.ltr,
               child: AboutUsPage(),
+            ),
+        '/guide1': (context) => Directionality(
+              textDirection: TextDirection.ltr,
+              child: GuidePage1(),
+            ),
+        '/guide2': (context) => Directionality(
+              textDirection: TextDirection.ltr,
+              child: GuidePage2(),
+            ),
+        '/guide3': (context) => Directionality(
+              textDirection: TextDirection.ltr,
+              child: GuidePage3(),
+            ),
+        '/guide4': (context) => Directionality(
+              textDirection: TextDirection.ltr,
+              child: GuidePage4(),
+            ),
+        '/guide5': (context) => Directionality(
+              textDirection: TextDirection.ltr,
+              child: GuidePage5(),
             ),
         '/language-settings': (context) => const Directionality(
               textDirection: TextDirection.ltr,

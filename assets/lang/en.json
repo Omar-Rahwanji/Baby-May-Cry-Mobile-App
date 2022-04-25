@@ -60,9 +60,15 @@
     "نساعدك على فهم طفلك":"Understand your baby more",
     "افهم الأسباب التي تجعل طفلك يبكي. نحن نساعدك على الفهم العميق لاحتياجات طفلك اليومية":"Understand the cry reason to act properly. We help by making you sure about your baby's daily needs.",
     "ابدأ":"START",
+    "النهاية":"DONE",
     "آلام بطن":"Belly Pain", 
     "التجشؤ":"Burping",
     "عدم الارتياح":"Discomfort",
     "الجوع":"Hungry", 
-    "التعب":"Tired"
+    "التعب":"Tired",
+    "قم بتسجيل حساب جديد":"Register a new Baby May Cry account",
+    "قم بتسجيل الدخول باسخدام حسابك":"Login using your Baby May Cry account",
+    "ابدأ تسجيل بكاء طفلك بالضغط على زر الميكروفون بالأسفل":"Start recording your baby cry by pressing on the mic button",
+    "سيتم إيقاف عملية تسجيل صوت بكاء طفلك بعد خمسة ثوان":"After 5 seconds, the app will stop recording your baby cry",
+    "تستطيع رؤية سبب بكاء طفلك في وسط الصفحة الرئيسية":"You can see your baby cry reason in the middle"
 }

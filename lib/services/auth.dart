@@ -54,5 +54,6 @@ class AuthService {
     await auth.signOut();
     SharedPreferences prefs = await SharedPreferences.getInstance();
     prefs.clear();
+    prefs.setBool("isLoggedIn", false);
   }
 }

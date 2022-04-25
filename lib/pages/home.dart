@@ -15,14 +15,12 @@ class HomePage extends StatefulWidget {
 
 class _HomePageState extends State<HomePage> {
   int currentPageIndex = 0;
-  List<Widget> navPages = [
-    const ParentDashboard(),
-    const GenerateReportPage(),
-    const GenerateReportPage()
-  ];
 
   @override
   Widget build(BuildContext context) {
+    final screenWidth = MediaQuery.of(context).size.width;
+    final screenHeight = MediaQuery.of(context).size.height;
+
     final Map<String, Object?> userData =
         ModalRoute.of(context)!.settings.arguments as Map<String, Object?>;
     return Scaffold(
@@ -80,14 +78,13 @@ class _HomePageState extends State<HomePage> {
         ),
       ),
       appBar: AppBar(
-        backgroundColor: Colors.transparent,
+        backgroundColor: Colors.white,
         leading: Builder(
           builder: (BuildContext context) {
             return IconButton(
-              iconSize: 15,
               color: Colors.grey,
               icon: Image.asset("assets/images/menu.png",
-                  width: 30, color: Colors.grey),
+                  width: screenWidth * 0.08, color: Colors.grey),
               onPressed: () {
                 Scaffold.of(context).openDrawer();
               },
@@ -95,24 +92,24 @@ class _HomePageState extends State<HomePage> {
             );
           },
         ),
-        elevation: 0,
+        elevation: 8,
         title: Container(
-          margin: const EdgeInsets.only(top: 10),
+          margin: EdgeInsets.only(top: screenHeight * 0.01),
           child: Hero(
             tag: "logo",
             child: Image.asset(
               "assets/images/logo.png",
-              width: 100,
+              width: screenWidth * 0.255,
             ),
           ),
         ),
         centerTitle: true,
-        toolbarHeight: 80,
+        toolbarHeight: screenHeight * 0.12,
         actions: [
           IconButton(
-            iconSize: 30,
+            iconSize: screenWidth * 0.08,
             color: Colors.grey,
-            padding: const EdgeInsets.only(right: 10),
+            padding: EdgeInsets.only(right: screenWidth * 0.005),
             icon: const Icon(Icons.info_outline),
             onPressed: () {
               Navigator.pushNamed(context, "/about-us");
@@ -148,7 +145,14 @@ class _HomePageState extends State<HomePage> {
           ),
         ],
       ),
-      body: navPages[currentPageIndex],
+      body: IndexedStack(
+        index: currentPageIndex,
+        children: const [
+          ParentDashboard(),
+          GenerateReportPage(),
+          GenerateReportPage()
+        ],
+      ),
     );
   }
 }

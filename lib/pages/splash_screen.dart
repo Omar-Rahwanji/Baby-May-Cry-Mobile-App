@@ -6,6 +6,7 @@ class SplashPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final screenWidth = MediaQuery.of(context).size.width;
+    double screenHeight = MediaQuery.of(context).size.height;
 
     Future.delayed(
       const Duration(seconds: 1),
@@ -16,8 +17,10 @@ class SplashPage extends StatelessWidget {
             'email': prefs.getString('email'),
             'fullName': prefs.getString('fullName')
           });
-        } else {
+        } else if (prefs.getBool("isLoggedIn") == false) {
           Navigator.pushReplacementNamed(context, "/login");
+        } else {
+          Navigator.pushReplacementNamed(context, "/about-us");
         }
       },
     );
@@ -25,35 +28,15 @@ class SplashPage extends StatelessWidget {
       body: Column(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
-          Transform(
-            alignment: Alignment.center,
-            transform: Matrix4.rotationX(500),
-            child: Container(
-              margin: const EdgeInsets.only(bottom: 56),
-              child: Image(
-                image: const AssetImage("assets/images/border.png"),
-                fit: BoxFit.fill,
-                width: screenWidth,
-                height: 157,
-              ),
-            ),
-          ),
-          SizedBox(height: 50),
-          const Center(
+          Center(
             child: SizedBox(
-              width: 300,
-              child: Hero(
-                  tag: "logo",
-                  child: Image(image: AssetImage('assets/images/logo.png'))),
-            ),
-          ),
-          Container(
-            margin: const EdgeInsets.only(top: 134),
-            child: Image(
-              image: const AssetImage("assets/images/border.png"),
-              fit: BoxFit.fill,
-              width: screenWidth,
-              height: 157,
+              width: screenWidth * 0.7,
+              child: const Hero(
+                tag: "logo",
+                child: Image(
+                  image: AssetImage('assets/images/logo.png'),
+                ),
+              ),
             ),
           ),
         ],

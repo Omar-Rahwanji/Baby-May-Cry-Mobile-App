@@ -36,13 +36,16 @@ class _ParentDashboardState extends State<ParentDashboard> {
 
   @override
   Widget build(BuildContext context) {
+    final screenWidth = MediaQuery.of(context).size.width;
+    double screenHeight = MediaQuery.of(context).size.height;
+
     return SingleChildScrollView(
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.center,
         children: [
-          const SizedBox(
+          SizedBox(
             width: double.infinity,
-            height: 20,
+            height: screenHeight * 0.029,
           ),
           Text(
             "Hello, Parent".tr(),
@@ -51,7 +54,7 @@ class _ParentDashboardState extends State<ParentDashboard> {
               fontSize: 30,
             ),
           ),
-          const SizedBox(height: 60),
+          SizedBox(height: screenHeight * 0.07),
           Row(
             textDirection: translator.activeLanguageCode == "en"
                 ? textDirection[0]
@@ -81,7 +84,7 @@ class _ParentDashboardState extends State<ParentDashboard> {
               ),
             ],
           ),
-          const SizedBox(height: 20),
+          SizedBox(height: screenHeight * 0.03),
           Align(
             alignment: translator.activeLanguageCode == "en"
                 ? Alignment.centerLeft
@@ -92,7 +95,10 @@ class _ParentDashboardState extends State<ParentDashboard> {
                   : textDirection[1],
               children: [
                 SizedBox(
-                    width: translator.activeLanguageCode == "en" ? 52 : 75),
+                  width: translator.activeLanguageCode == "en"
+                      ? screenWidth * 0.133
+                      : screenWidth * 0.2,
+                ),
                 Text(
                   "Last cry reason".tr(),
                   style: const TextStyle(
@@ -103,14 +109,14 @@ class _ParentDashboardState extends State<ParentDashboard> {
               ],
             ),
           ),
-          const SizedBox(height: 40),
+          SizedBox(height: screenHeight * 0.05),
           Text(
             cryReason.tr(),
             style: const TextStyle(
               fontSize: 42,
             ),
           ),
-          const SizedBox(height: 30),
+          SizedBox(height: screenHeight * 0.04),
           Text(
             "Duration".tr(),
             style: const TextStyle(
@@ -140,10 +146,11 @@ class _ParentDashboardState extends State<ParentDashboard> {
               ),
             ],
           ),
-          const SizedBox(height: 60),
+          SizedBox(height: screenHeight * 0.07),
           const RecorderButton(),
-          const SizedBox(height: 60),
+          SizedBox(height: screenHeight * 0.07),
           const PlayerButton(),
+          SizedBox(height: screenHeight * 0.02),
         ],
       ),
     );
