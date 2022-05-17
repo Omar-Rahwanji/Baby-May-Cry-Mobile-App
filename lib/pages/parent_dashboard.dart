@@ -1,3 +1,5 @@
+import 'dart:isolate';
+
 import 'package:baby_may_cry/components/recorder_button.dart';
 import 'package:baby_may_cry/services/api.dart';
 import 'package:flutter/material.dart';
@@ -19,11 +21,15 @@ class _ParentDashboardState extends State<ParentDashboard> {
     TextDirection.ltr,
     TextDirection.rtl
   ];
+  bool isLoadingCryReason = true;
 
   void fetchCryReaon() async {
     final response = await getCryReason();
     setState(() {
       cryReason = response['cryReason'].toString().tr();
+      cryReason.toString().isNotEmpty
+          ? isLoadingCryReason = false
+          : isLoadingCryReason = true;
     });
   }
 
@@ -110,10 +116,20 @@ class _ParentDashboardState extends State<ParentDashboard> {
             ),
           ),
           SizedBox(height: screenHeight * 0.05),
-          Text(
-            cryReason.tr(),
-            style: const TextStyle(
-              fontSize: 42,
+          Visibility(
+            visible: isLoadingCryReason,
+            child: SizedBox(
+              width: screenWidth * 0.5,
+              child: const LinearProgressIndicator(),
+            ),
+          ),
+          Visibility(
+            visible: !isLoadingCryReason,
+            child: Text(
+              cryReason.tr(),
+              style: const TextStyle(
+                fontSize: 42,
+              ),
             ),
           ),
           SizedBox(height: screenHeight * 0.04),
