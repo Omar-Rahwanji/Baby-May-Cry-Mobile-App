@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:baby_may_cry/services/audio.dart';
 import 'package:baby_may_cry/static/colors.dart';
 import 'package:flutter/material.dart';
@@ -64,9 +66,16 @@ class _RecorderButtonState extends State<RecorderButton> {
                 color: CustomColors.primary,
                 icon: Icon(icon),
                 onPressed: () async {
-                  await recorder.toggleRecording();
-                  isRecording = recorder.isRecording;
-                  setState(() {});
+                  if (!isRecording) {
+                    await recorder.toggleRecording();
+                    isRecording = recorder.isRecording;
+                    Timer(const Duration(seconds: 6), () async {
+                      await recorder.toggleRecording();
+                      isRecording = recorder.isRecording;
+                      setState(() {});
+                    });
+                    setState(() {});
+                  }
                 },
               ),
             ],
