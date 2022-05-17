@@ -1,6 +1,7 @@
 import 'dart:convert';
 import 'dart:io';
 
+import 'package:baby_may_cry/pages/parent_dashboard.dart';
 import 'package:baby_may_cry/services/api.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter_sound_lite/flutter_sound.dart';
@@ -51,7 +52,9 @@ class SoundRecorder {
     String? audioFilePath = await _audioRecorder!.stopRecorder();
 
     print(this.audioFilePath);
-    sendCrySound(this.audioFilePath);
+    sendCrySound(this.audioFilePath).then((value) {
+      ParentDashboard.canFetchCryReason = true;
+    });
   }
 
   Future toggleRecording() async {

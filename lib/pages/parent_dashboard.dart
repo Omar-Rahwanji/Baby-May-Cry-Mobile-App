@@ -1,3 +1,4 @@
+import 'dart:async';
 import 'dart:isolate';
 
 import 'package:baby_may_cry/components/recorder_button.dart';
@@ -10,6 +11,7 @@ import '../static/colors.dart';
 
 class ParentDashboard extends StatefulWidget {
   const ParentDashboard({Key? key}) : super(key: key);
+  static bool canFetchCryReason = false;
 
   @override
   State<ParentDashboard> createState() => _ParentDashboardState();
@@ -23,7 +25,7 @@ class _ParentDashboardState extends State<ParentDashboard> {
   ];
   bool isLoadingCryReason = true;
 
-  void fetchCryReaon() async {
+  void fetchCryReason() async {
     final response = await getCryReason();
     setState(() {
       cryReason = response['cryReason'].toString().tr();
@@ -37,7 +39,13 @@ class _ParentDashboardState extends State<ParentDashboard> {
   void initState() {
     super.initState();
 
-    fetchCryReaon();
+    // fetchCryReason();
+    Timer.periodic(const Duration(milliseconds: 500), (timer) {
+      if (ParentDashboard.canFetchCryReason) {
+        ParentDashboard.canFetchCryReason = false;
+        fetchCryReason();
+      }
+    });
   }
 
   @override
