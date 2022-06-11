@@ -1,17 +1,17 @@
 import 'dart:async';
-import 'dart:isolate';
 
 import 'package:baby_may_cry/components/recorder_button.dart';
-import 'package:baby_may_cry/services/api.dart';
 import 'package:flutter/material.dart';
 import 'package:localize_and_translate/localize_and_translate.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 import '../components/player_button.dart';
+import '../services/db.dart';
 import '../static/colors.dart';
 
 class ParentDashboard extends StatefulWidget {
   const ParentDashboard({Key? key}) : super(key: key);
-  static bool canFetchCryReason = false;
+  static bool canFetchCryReason = true;
 
   @override
   State<ParentDashboard> createState() => _ParentDashboardState();
@@ -19,6 +19,7 @@ class ParentDashboard extends StatefulWidget {
 
 class _ParentDashboardState extends State<ParentDashboard> {
   String cryReason = "";
+  String lastCryDateTime = "";
   final List<TextDirection> textDirection = [
     TextDirection.ltr,
     TextDirection.rtl
@@ -26,13 +27,21 @@ class _ParentDashboardState extends State<ParentDashboard> {
   bool isLoadingCryReason = true;
 
   void fetchCryReason() async {
-    final response = await getCryReason();
-    setState(() {
-      cryReason = response['cryReason'].toString().tr();
-      cryReason.toString().isNotEmpty
-          ? isLoadingCryReason = false
-          : isLoadingCryReason = true;
-    });
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    String? parentEmail = prefs.getString("email");
+
+    await FirestoreDb.getCryRecords(parentEmail!);
+
+    cryReason = prefs.getString("lastCryReason")!.tr();
+    lastCryDateTime = DateTime.now()
+        .difference(DateTime.parse(prefs.getString("lastCryDateTime")!))
+        .inMinutes
+        .toString();
+
+    cryReason.toString().isNotEmpty
+        ? isLoadingCryReason = false
+        : isLoadingCryReason = true;
+    setState(() {});
   }
 
   @override
@@ -83,7 +92,7 @@ class _ParentDashboardState extends State<ParentDashboard> {
                 ),
               ),
               Text(
-                "30".tr(),
+                lastCryDateTime,
                 style: TextStyle(
                   color: CustomColors.secondary,
                   fontSize: 20,
@@ -155,14 +164,14 @@ class _ParentDashboardState extends State<ParentDashboard> {
                 : textDirection[1],
             children: [
               Text(
-                "30".tr(),
+                "6".tr(),
                 style: const TextStyle(
                   fontWeight: FontWeight.bold,
                   fontSize: 20,
                 ),
               ),
               Text(
-                " min".tr(),
+                " seconds".tr(),
                 style: const TextStyle(
                   color: Colors.blueGrey,
                   fontSize: 20,
