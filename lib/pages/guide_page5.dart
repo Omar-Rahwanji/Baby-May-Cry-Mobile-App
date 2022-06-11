@@ -59,10 +59,7 @@ class GuidePage5 extends StatelessWidget {
               onPressed: () async {
                 final prefs = await SharedPreferences.getInstance();
                 if (prefs.getBool("isLoggedIn") == true) {
-                  Navigator.pushReplacementNamed(context, "/home", arguments: {
-                    'email': prefs.getString('email'),
-                    'fullName': prefs.getString('fullName')
-                  });
+                  Navigator.of(context).popUntil((route) => route.isFirst);
                 } else {
                   prefs.setBool("isLoggedIn", false);
                   Navigator.pushNamed(context, "/login");

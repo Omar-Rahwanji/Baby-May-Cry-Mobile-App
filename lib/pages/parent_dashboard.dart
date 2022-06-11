@@ -8,16 +8,20 @@ import 'package:shared_preferences/shared_preferences.dart';
 import '../components/player_button.dart';
 import '../services/db.dart';
 import '../static/colors.dart';
+import 'crying_history.dart';
 
 class ParentDashboard extends StatefulWidget {
   const ParentDashboard({Key? key}) : super(key: key);
   static bool canFetchCryReason = true;
+  static bool refreshLastCryTime = true;
 
   @override
   State<ParentDashboard> createState() => _ParentDashboardState();
 }
 
 class _ParentDashboardState extends State<ParentDashboard> {
+  Timer? _fetchingCryReasonTimer;
+  Timer? _refreshLastCryTimeTimer;
   String cryReason = "";
   String lastCryDateTime = "";
   final List<TextDirection> textDirection = [
@@ -30,37 +34,59 @@ class _ParentDashboardState extends State<ParentDashboard> {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     String? parentEmail = prefs.getString("email");
 
-    await FirestoreDb.getCryRecords(parentEmail!);
+    await FirestoreDb.getLastCryRecord(parentEmail!);
+    await FirestoreDb.getCryRecords(parentEmail);
+    refreshLastCryTime();
 
-    cryReason = prefs.getString("lastCryReason")!.tr();
+    setState(() {
+      cryReason = prefs.getString("lastCryReason")!.tr();
+      cryReason.toString().isEmpty
+          ? isLoadingCryReason = true
+          : isLoadingCryReason = false;
+      CryingHistoryPage.cryingData = FirestoreDb.cryRecords;
+    });
+  }
+
+  void refreshLastCryTime() async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    String? parentEmail = prefs.getString("email");
+
     lastCryDateTime = DateTime.now()
         .difference(DateTime.parse(prefs.getString("lastCryDateTime")!))
         .inMinutes
         .toString();
-
-    cryReason.toString().isNotEmpty
-        ? isLoadingCryReason = false
-        : isLoadingCryReason = true;
     setState(() {});
   }
 
   @override
   void initState() {
     super.initState();
-
-    // fetchCryReason();
-    Timer.periodic(const Duration(milliseconds: 500), (timer) {
+    _fetchingCryReasonTimer =
+        Timer.periodic(const Duration(milliseconds: 500), (timer) {
       if (ParentDashboard.canFetchCryReason) {
         ParentDashboard.canFetchCryReason = false;
         fetchCryReason();
       }
     });
+
+    _refreshLastCryTimeTimer =
+        Timer.periodic(const Duration(minutes: 1), (timer) {
+      refreshLastCryTime();
+    });
+  }
+
+  @override
+  void dispose() {
+    _fetchingCryReasonTimer!.cancel();
+    _refreshLastCryTimeTimer!.cancel();
+    super.dispose();
   }
 
   @override
   Widget build(BuildContext context) {
     final screenWidth = MediaQuery.of(context).size.width;
     double screenHeight = MediaQuery.of(context).size.height;
+    ParentDashboard.refreshLastCryTime = true;
 
     return SingleChildScrollView(
       child: Column(
@@ -99,7 +125,7 @@ class _ParentDashboardState extends State<ParentDashboard> {
                 ),
               ),
               Text(
-                " min".tr(),
+                " " + "min".tr(),
                 style: const TextStyle(
                   color: Colors.blueGrey,
                   fontSize: 20,
@@ -171,7 +197,7 @@ class _ParentDashboardState extends State<ParentDashboard> {
                 ),
               ),
               Text(
-                " seconds".tr(),
+                " " + "seconds".tr(),
                 style: const TextStyle(
                   color: Colors.blueGrey,
                   fontSize: 20,

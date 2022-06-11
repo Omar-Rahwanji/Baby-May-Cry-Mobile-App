@@ -1,4 +1,4 @@
-import 'generate_report.dart';
+import 'crying_history.dart';
 import 'profile.dart';
 import 'parent_dashboard.dart';
 import 'package:baby_may_cry/services/auth.dart';
@@ -149,8 +149,8 @@ class _HomePageState extends State<HomePage> {
         index: currentPageIndex,
         children: const [
           ParentDashboard(),
-          GenerateReportPage(),
-          GenerateReportPage()
+          CryingHistoryPage(),
+          ProfilePage(),
         ],
       ),
     );

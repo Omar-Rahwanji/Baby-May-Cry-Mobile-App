@@ -38,24 +38,39 @@ class FirestoreDb {
     return false;
   }
 
-  static Future<void> getCryRecords(String parentEmail) async {
+  static Future<void> getLastCryRecord(String parentEmail) async {
+    FirestoreDb.cryRecords = [];
     await dbContext
         .collection("cry")
         .where("parentEmail", isEqualTo: parentEmail)
-        .orderBy("dateTime")
+        .orderBy("dateTime",descending: true)
+        .get()
+        .then((cryRecords) async {
+      if (cryRecords.size > 0) {
+        var lastCryRecord = cryRecords.docs.first.data();
+        SharedPreferences prefs = await SharedPreferences.getInstance();
+        prefs.setString("lastCryReason", lastCryRecord["reason"]);
+        prefs.setString("lastCryDateTime", lastCryRecord["dateTime"]);
+      }
+    });
+  }
+
+  static Future<void> getCryRecords(String parentEmail) async {
+    FirestoreDb.cryRecords = [];
+    await dbContext
+        .collection("cry")
+        .where("parentEmail", isEqualTo: parentEmail)
+        .orderBy("dateTime", descending: true)
         .get()
         .then((cryRecords) async {
       if (cryRecords.size > 0) {
         cryRecords.docs.forEach((element) {
           FirestoreDb.cryRecords.add({
+            "parentEmail": element.data()["parentEmail"],
             "dateTime": element.data()["dateTime"],
             "reason": element.data()["reason"],
           });
         });
-        var lastCryRecord = cryRecords.docs.last.data();
-        SharedPreferences prefs = await SharedPreferences.getInstance();
-        prefs.setString("lastCryReason", lastCryRecord["reason"]);
-        prefs.setString("lastCryDateTime", lastCryRecord["dateTime"]);
       }
     });
   }

@@ -1,3 +1,5 @@
+import 'package:flutter_app_restart/flutter_app_restart.dart';
+
 import '../static/colors.dart';
 import 'package:flutter/material.dart';
 import 'package:localize_and_translate/localize_and_translate.dart';
@@ -80,13 +82,14 @@ class _LanguageSettingsPageState extends State<LanguageSettingsPage> {
               padding: EdgeInsets.all(screenWidth * 0.027),
               shape: RoundedRectangleBorder(
                   borderRadius: BorderRadius.circular(22.0)),
-              onPressed: () {
+              onPressed: () async {
                 translator.setNewLanguage(
                   context,
                   newLanguage: currentLanguage == "English" ? "en" : "ar",
                   remember: true,
-                  restart: true,
+                  restart: false,
                 );
+                await FlutterRestart.restartApp();
               },
             ),
             SizedBox(
