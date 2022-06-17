@@ -21,6 +21,7 @@ class FirestoreDb {
         SharedPreferences prefs = await SharedPreferences.getInstance();
         prefs.setString("email", user.data()!['email']);
         prefs.setString("fullName", user.data()!['fullName']);
+        prefs.setString("role", user.data()!['role']);
       }
     });
   }

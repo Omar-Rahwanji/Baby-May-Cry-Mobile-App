@@ -133,6 +133,7 @@ class _SignupPageState extends State<SignupPage> {
                                 'email': email.text,
                                 'fullName':
                                     firstName.text + ' ' + lastName.text,
+                                'role': 'parent',
                               };
                               if (await AuthService.signup(
                                   userData, password.text)) {

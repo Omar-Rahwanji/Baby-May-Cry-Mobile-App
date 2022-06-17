@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
+import 'home.dart';
+
 class SplashPage extends StatelessWidget {
   const SplashPage({Key? key}) : super(key: key);
   @override
@@ -13,6 +15,7 @@ class SplashPage extends StatelessWidget {
       () async {
         final prefs = await SharedPreferences.getInstance();
         if (prefs.getBool("isLoggedIn") == true) {
+          HomePage.userRole = prefs.getString("role")!;
           Navigator.pushReplacementNamed(context, "/home", arguments: {
             'email': prefs.getString('email'),
             'fullName': prefs.getString('fullName')

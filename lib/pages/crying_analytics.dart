@@ -7,20 +7,20 @@ import 'package:modal_progress_hud_nsn/modal_progress_hud_nsn.dart';
 
 import '../components/crying-history-card.dart';
 
-class CryingHistoryPage extends StatefulWidget {
-  const CryingHistoryPage({Key? key}) : super(key: key);
+class CryingAnalyticsPage extends StatefulWidget {
+  const CryingAnalyticsPage({Key? key}) : super(key: key);
   static var cryingData = [];
 
   @override
-  State<CryingHistoryPage> createState() => _CryingHistoryPageState();
+  State<CryingAnalyticsPage> createState() => _CryingAnalyticsPageState();
 }
 
-class _CryingHistoryPageState extends State<CryingHistoryPage> {
+class _CryingAnalyticsPageState extends State<CryingAnalyticsPage> {
   bool showSpinner = false;
   Timer? _timer;
   void refreshCryingHistoryList() async {
     setState(() {
-      CryingHistoryPage.cryingData = FirestoreDb.cryRecords;
+      CryingAnalyticsPage.cryingData = FirestoreDb.cryRecords;
     });
   }
 
@@ -49,14 +49,14 @@ class _CryingHistoryPageState extends State<CryingHistoryPage> {
       body: ModalProgressHUD(
         inAsyncCall: showSpinner,
         child: ListView.builder(
-          itemCount: CryingHistoryPage.cryingData.length,
+          itemCount: CryingAnalyticsPage.cryingData.length,
           itemBuilder: (BuildContext context, int index) {
             String hour = TimeOfDay.fromDateTime(DateTime.parse(
-                    CryingHistoryPage.cryingData[index]['dateTime']))
+                    CryingAnalyticsPage.cryingData[index]['dateTime']))
                 .hourOfPeriod
                 .toString();
             String minute = TimeOfDay.fromDateTime(DateTime.parse(
-                    CryingHistoryPage.cryingData[index]['dateTime']))
+                    CryingAnalyticsPage.cryingData[index]['dateTime']))
                 .minute
                 .toString();
             ;
@@ -69,13 +69,13 @@ class _CryingHistoryPageState extends State<CryingHistoryPage> {
 
             return CryingHistoryCard(
               date: DateTime.parse(
-                  CryingHistoryPage.cryingData[index]['dateTime']),
+                  CryingAnalyticsPage.cryingData[index]['dateTime']),
               time: hour.toString() + ":" + minute.toString(),
               reason:
-                  CryingHistoryPage.cryingData[index]['reason'].toString().tr(),
+                  CryingAnalyticsPage.cryingData[index]['reason'].toString().tr(),
               duration: "6".tr() + " " + "seconds".tr(),
               timeStamp: TimeOfDay.fromDateTime(DateTime.parse(
-                      CryingHistoryPage.cryingData[index]['dateTime']))
+                      CryingAnalyticsPage.cryingData[index]['dateTime']))
                   .period
                   .name
                   .tr(),

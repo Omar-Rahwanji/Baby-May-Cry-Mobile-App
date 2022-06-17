@@ -2,9 +2,12 @@ import 'package:baby_may_cry/services/db.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
+import '../pages/home.dart';
+
 class AuthService {
   static final auth = FirebaseAuth.instance;
   static String? currentUserEmail;
+  static String? currentUserRole;
 
   static Future<bool> login(String email, String password) async {
     try {
@@ -14,6 +17,7 @@ class AuthService {
         SharedPreferences prefs = await SharedPreferences.getInstance();
         await FirestoreDb.getUserData(email);
         prefs.setBool("isLoggedIn", true);
+        HomePage.userRole = prefs.getString("role")!;
         return true;
       }
     } catch (e) {
@@ -32,6 +36,7 @@ class AuthService {
         prefs.setBool("isLoggedIn", true);
         prefs.setString("email", userData['email']!);
         prefs.setString("fullName", userData['fullName']!);
+        prefs.setString("role", userData['role']!);
         return await FirestoreDb.addUser(userData);
       }
     } catch (e) {

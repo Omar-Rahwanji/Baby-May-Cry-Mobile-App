@@ -47,6 +47,8 @@
     " لم يبكي طفلك منذ":"Your baby didn't cry since ",
     "آخر سبب للبكاء":"Last cry reason",
     "دقيقة":"min",
+    "ساعة":"hour",
+    "يوم":"day",
     "ثوانٍ":"seconds",
     "٦":"6",
     "مدة البكاء":"Duration",

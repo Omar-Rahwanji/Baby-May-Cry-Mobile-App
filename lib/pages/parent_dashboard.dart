@@ -23,7 +23,9 @@ class _ParentDashboardState extends State<ParentDashboard> {
   Timer? _fetchingCryReasonTimer;
   Timer? _refreshLastCryTimeTimer;
   String cryReason = "";
-  String lastCryDateTime = "";
+  int lastCryDateTime = 0;
+  String timeUnit = "min".tr();
+
   final List<TextDirection> textDirection = [
     TextDirection.ltr,
     TextDirection.rtl
@@ -53,25 +55,35 @@ class _ParentDashboardState extends State<ParentDashboard> {
 
     lastCryDateTime = DateTime.now()
         .difference(DateTime.parse(prefs.getString("lastCryDateTime")!))
-        .inMinutes
-        .toString();
-    setState(() {});
+        .inMinutes;
+    if (lastCryDateTime / 60 >= 24) {
+      lastCryDateTime = (lastCryDateTime / 60 / 24).floor();
+      timeUnit = "day".tr();
+    } else if (lastCryDateTime >= 60) {
+      lastCryDateTime = (lastCryDateTime / 60).floor();
+      timeUnit = "hour".tr();
+    }
   }
 
   @override
   void initState() {
     super.initState();
+    ParentDashboard.canFetchCryReason = true;
+    ParentDashboard.refreshLastCryTime = true;
+
     _fetchingCryReasonTimer =
         Timer.periodic(const Duration(milliseconds: 500), (timer) {
       if (ParentDashboard.canFetchCryReason) {
         ParentDashboard.canFetchCryReason = false;
         fetchCryReason();
+        setState(() {});
       }
     });
 
     _refreshLastCryTimeTimer =
         Timer.periodic(const Duration(minutes: 1), (timer) {
       refreshLastCryTime();
+      setState(() {});
     });
   }
 
@@ -79,6 +91,7 @@ class _ParentDashboardState extends State<ParentDashboard> {
   void dispose() {
     _fetchingCryReasonTimer!.cancel();
     _refreshLastCryTimeTimer!.cancel();
+
     super.dispose();
   }
 
@@ -86,7 +99,6 @@ class _ParentDashboardState extends State<ParentDashboard> {
   Widget build(BuildContext context) {
     final screenWidth = MediaQuery.of(context).size.width;
     double screenHeight = MediaQuery.of(context).size.height;
-    ParentDashboard.refreshLastCryTime = true;
 
     return SingleChildScrollView(
       child: Column(
@@ -118,18 +130,29 @@ class _ParentDashboardState extends State<ParentDashboard> {
                 ),
               ),
               Text(
-                lastCryDateTime,
+                lastCryDateTime.toString(),
                 style: TextStyle(
                   color: CustomColors.secondary,
                   fontSize: 20,
                 ),
               ),
-              Text(
-                " " + "min".tr(),
-                style: const TextStyle(
-                  color: Colors.blueGrey,
-                  fontSize: 20,
-                ),
+              Row(
+                children: [
+                  const Text(
+                    " ",
+                    style: TextStyle(
+                      color: Colors.blueGrey,
+                      fontSize: 20,
+                    ),
+                  ),
+                  Text(
+                    timeUnit,
+                    style: const TextStyle(
+                      color: Colors.blueGrey,
+                      fontSize: 20,
+                    ),
+                  ),
+                ],
               ),
             ],
           ),

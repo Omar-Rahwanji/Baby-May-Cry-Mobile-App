@@ -1,3 +1,5 @@
+import 'admin_dashbaord.dart';
+import 'crying_analytics.dart';
 import 'crying_history.dart';
 import 'profile.dart';
 import 'parent_dashboard.dart';
@@ -9,6 +11,8 @@ import 'package:shared_preferences/shared_preferences.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({Key? key}) : super(key: key);
+  static String userRole = "";
+
   @override
   _HomePageState createState() => _HomePageState();
 }
@@ -23,6 +27,7 @@ class _HomePageState extends State<HomePage> {
 
     final Map<String, Object?> userData =
         ModalRoute.of(context)!.settings.arguments as Map<String, Object?>;
+
     return Scaffold(
       drawer: Drawer(
         child: Column(
@@ -147,10 +152,14 @@ class _HomePageState extends State<HomePage> {
       ),
       body: IndexedStack(
         index: currentPageIndex,
-        children: const [
-          ParentDashboard(),
-          CryingHistoryPage(),
-          ProfilePage(),
+        children: [
+          HomePage.userRole == "admin"
+              ? const AdminDashboard()
+              : const ParentDashboard(),
+          HomePage.userRole == "admin"
+              ? const CryingAnalyticsPage()
+              : const CryingHistoryPage(),
+          const ProfilePage(),
         ],
       ),
     );
