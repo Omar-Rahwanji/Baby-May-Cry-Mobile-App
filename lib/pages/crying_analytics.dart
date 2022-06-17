@@ -5,7 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:localize_and_translate/localize_and_translate.dart';
 import 'package:modal_progress_hud_nsn/modal_progress_hud_nsn.dart';
 
-import '../components/crying-history-card.dart';
+import '../components/crying_history_card.dart';
 
 class CryingAnalyticsPage extends StatefulWidget {
   const CryingAnalyticsPage({Key? key}) : super(key: key);
@@ -42,7 +42,7 @@ class _CryingAnalyticsPageState extends State<CryingAnalyticsPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text("Crying history".tr()),
+        title: Text("Crying Analytics".tr()),
         centerTitle: true,
         elevation: 16,
       ),
@@ -71,8 +71,9 @@ class _CryingAnalyticsPageState extends State<CryingAnalyticsPage> {
               date: DateTime.parse(
                   CryingAnalyticsPage.cryingData[index]['dateTime']),
               time: hour.toString() + ":" + minute.toString(),
-              reason:
-                  CryingAnalyticsPage.cryingData[index]['reason'].toString().tr(),
+              reason: CryingAnalyticsPage.cryingData[index]['reason']
+                  .toString()
+                  .tr(),
               duration: "6".tr() + " " + "seconds".tr(),
               timeStamp: TimeOfDay.fromDateTime(DateTime.parse(
                       CryingAnalyticsPage.cryingData[index]['dateTime']))

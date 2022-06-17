@@ -5,7 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:localize_and_translate/localize_and_translate.dart';
 import 'package:modal_progress_hud_nsn/modal_progress_hud_nsn.dart';
 
-import '../components/crying-history-card.dart';
+import '../components/crying_history_card.dart';
 
 class CryingHistoryPage extends StatefulWidget {
   const CryingHistoryPage({Key? key}) : super(key: key);

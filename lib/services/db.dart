@@ -1,3 +1,4 @@
+import 'package:baby_may_cry/pages/admin_dashbaord.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
@@ -44,7 +45,7 @@ class FirestoreDb {
     await dbContext
         .collection("cry")
         .where("parentEmail", isEqualTo: parentEmail)
-        .orderBy("dateTime",descending: true)
+        .orderBy("dateTime", descending: true)
         .get()
         .then((cryRecords) async {
       if (cryRecords.size > 0) {
@@ -73,6 +74,25 @@ class FirestoreDb {
           });
         });
       }
+    });
+  }
+
+  static Future<void> getNumberOfParents() async {
+    await dbContext
+        .collection("users")
+        .where("role", isEqualTo: "parent")
+        .get()
+        .then((numberOfParent) async {
+      AdminDashboard.numberOfParents = numberOfParent.size;
+    });
+  }
+
+  static Future<void> getNumberOfCryings() async {
+    await dbContext
+        .collection("cry")
+        .get()
+        .then((numberOfCryings) async {
+      AdminDashboard.numberOfCryings = numberOfCryings.size;
     });
   }
 }

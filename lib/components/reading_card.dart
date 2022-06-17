@@ -12,7 +12,7 @@ class ReadingCard extends StatelessWidget {
   final Color color;
   final String image;
   final String label;
-  final String reading;
+  final int reading;
   final String unit;
 
   @override
@@ -22,15 +22,15 @@ class ReadingCard extends StatelessWidget {
         borderRadius: BorderRadius.circular(10),
         color: color.withOpacity(0.8),
       ),
-      width: 130,
-      height: 175,
+      width: 150,
+      height: 195,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.center,
         children: [
           const SizedBox(height: 20),
           Image.asset(
-            image,
-            color: label == "heart rate" ? Colors.white : null,
+            'assets/images/' + image,
+            color: Colors.white,
             width: 35,
           ),
           const SizedBox(height: 20),
@@ -38,7 +38,7 @@ class ReadingCard extends StatelessWidget {
             label,
             style: const TextStyle(
               color: Colors.white,
-              fontSize: 20,
+              fontSize: 22,
             ),
           ),
           const SizedBox(height: 30),
@@ -46,10 +46,11 @@ class ReadingCard extends StatelessWidget {
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
               Text(
-                reading,
+                reading.toString(),
                 style: const TextStyle(
                   color: Colors.white,
                   fontSize: 20,
+                  fontWeight: FontWeight.bold,
                 ),
               ),
               Text(
