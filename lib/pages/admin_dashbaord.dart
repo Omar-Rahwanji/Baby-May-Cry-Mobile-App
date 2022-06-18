@@ -29,8 +29,7 @@ class _AdminDashboardState extends State<AdminDashboard> {
 
   void fetchAnalytics() async {
     isLoadingAnalytics = true;
-    SharedPreferences prefs = await SharedPreferences.getInstance();
-    // String? parentEmail = prefs.getString("email");
+
     await FirestoreDb.getNumberOfParents();
     await FirestoreDb.getNumberOfCryings();
 
@@ -55,7 +54,7 @@ class _AdminDashboardState extends State<AdminDashboard> {
     final screenHeight = MediaQuery.of(context).size.height;
 
     return ModalProgressHUD(
-      inAsyncCall: isLoadingAnalytics,
+      inAsyncCall: false,
       child: SingleChildScrollView(
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.center,
@@ -85,7 +84,7 @@ class _AdminDashboardState extends State<AdminDashboard> {
               children: [
                 ReadingCard(
                   color: CustomColors.primary,
-                  image: "pulse.png",
+                  image: "parents.png",
                   label: "Parents",
                   reading: AdminDashboard.numberOfParents,
                   unit: " ",
@@ -93,7 +92,7 @@ class _AdminDashboardState extends State<AdminDashboard> {
                 SizedBox(width: screenWidth * 0.1),
                 ReadingCard(
                   color: CustomColors.secondary,
-                  image: "pulse.png",
+                  image: "baby-crying.png",
                   label: "Cryings",
                   reading: AdminDashboard.numberOfCryings,
                   unit: " ",

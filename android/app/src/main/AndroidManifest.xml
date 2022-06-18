@@ -2,6 +2,8 @@
     package="com.babymaycry.baby_may_cry">
     <uses-permission android:name="android.permission.RECORD_AUDIO" />
     <uses-permission android:name="android.permission.FOREGROUND_SERVICE" />
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+    <uses-permission android:name="android.permission.INTERNET"/>
    <application
         android:label="Baby May Cry"
         android:name="${applicationName}"

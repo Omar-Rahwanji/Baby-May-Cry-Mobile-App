@@ -82,17 +82,14 @@ class FirestoreDb {
         .collection("users")
         .where("role", isEqualTo: "parent")
         .get()
-        .then((numberOfParent) async {
-      AdminDashboard.numberOfParents = numberOfParent.size;
+        .then((parent) {
+      AdminDashboard.numberOfParents = parent.size;
     });
   }
 
   static Future<void> getNumberOfCryings() async {
-    await dbContext
-        .collection("cry")
-        .get()
-        .then((numberOfCryings) async {
-      AdminDashboard.numberOfCryings = numberOfCryings.size;
+    await dbContext.collection("cry").get().then((cryings) {
+      AdminDashboard.numberOfCryings = cryings.size;
     });
   }
 }

@@ -30,8 +30,7 @@ class ReadingCard extends StatelessWidget {
           const SizedBox(height: 20),
           Image.asset(
             'assets/images/' + image,
-            color: Colors.white,
-            width: 35,
+            width: 45,
           ),
           const SizedBox(height: 20),
           Text(
