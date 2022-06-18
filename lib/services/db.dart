@@ -82,14 +82,28 @@ class FirestoreDb {
         .collection("users")
         .where("role", isEqualTo: "parent")
         .get()
-        .then((parent) {
-      AdminDashboard.numberOfParents = parent.size;
+        .then((parents) async {
+      SharedPreferences prefs = await SharedPreferences.getInstance();
+      prefs.setInt("numberOfParents", parents.size);
     });
   }
 
   static Future<void> getNumberOfCryings() async {
-    await dbContext.collection("cry").get().then((cryings) {
-      AdminDashboard.numberOfCryings = cryings.size;
+    await dbContext.collection("cry").get().then((cryings) async {
+      SharedPreferences prefs = await SharedPreferences.getInstance();
+      prefs.setInt("numberOfCryings", cryings.size);
+    });
+  }
+
+  static Future<void> getNumberOfCryReason(String cryReason) async {
+    FirestoreDb.cryRecords = [];
+    await dbContext
+        .collection("cry")
+        .where("reason", isEqualTo: cryReason)
+        .get()
+        .then((cryRecords) async {
+      SharedPreferences prefs = await SharedPreferences.getInstance();
+      prefs.setInt("numberOf" + cryReason, cryRecords.size);
     });
   }
 }

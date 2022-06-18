@@ -1,12 +1,12 @@
 import 'dart:async';
 
 import 'package:baby_may_cry/models/bar_chart_model.dart';
-import 'package:baby_may_cry/pages/admin_dashbaord.dart';
 import 'package:baby_may_cry/services/db.dart';
 import 'package:flutter/material.dart';
 import 'package:localize_and_translate/localize_and_translate.dart';
 import 'package:modal_progress_hud_nsn/modal_progress_hud_nsn.dart';
 import 'package:charts_flutter/flutter.dart' as charts;
+import 'package:shared_preferences/shared_preferences.dart';
 
 class CryingAnalyticsPage extends StatefulWidget {
   const CryingAnalyticsPage({Key? key}) : super(key: key);
@@ -17,46 +17,32 @@ class CryingAnalyticsPage extends StatefulWidget {
 }
 
 class _CryingAnalyticsPageState extends State<CryingAnalyticsPage> {
-  bool showSpinner = false;
   Timer? _timer;
-  List<BarChartModel> chartData = [
-    BarChartModel(
-      cryReason: "hungry",
-      numberOfSounds: 50,
-      color: charts.ColorUtil.fromDartColor(Colors.red),
-    ),
-    BarChartModel(
-      cryReason: "discomfort",
-      numberOfSounds: 30,
-      color: charts.ColorUtil.fromDartColor(Colors.green),
-    ),
-    BarChartModel(
-      cryReason: "belly pain",
-      numberOfSounds: 75,
-      color: charts.ColorUtil.fromDartColor(Colors.blue),
-    ),
-    BarChartModel(
-      cryReason: "burping",
-      numberOfSounds: 15,
-      color: charts.ColorUtil.fromDartColor(Colors.yellow),
-    ),
-    BarChartModel(
-      cryReason: "tired",
-      numberOfSounds: 5,
-      color: charts.ColorUtil.fromDartColor(Colors.purple),
-    ),
+  List<int> numberOfcryReasons = [0, 0, 0, 0, 0];
+
+  List<String> cryReasons = [
+    "belly_pain",
+    "burping",
+    "discomfort",
+    "hungry",
+    "tired",
   ];
 
   void refreshCryingHistoryList() async {
-    setState(() {
-      CryingAnalyticsPage.cryingData = FirestoreDb.cryRecords;
-    });
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+
+    int i = 0;
+    for (String cryReason in cryReasons) {
+      await FirestoreDb.getNumberOfCryReason(cryReason);
+      numberOfcryReasons[i++] = prefs.getInt("numberOf" + cryReason)!;
+    }
+    setState(() {});
   }
 
   @override
   void initState() {
     super.initState();
-    _timer = Timer.periodic(const Duration(milliseconds: 500), (timer) {
+    _timer = Timer.periodic(const Duration(seconds: 1), (timer) {
       refreshCryingHistoryList();
     });
   }
@@ -71,6 +57,34 @@ class _CryingAnalyticsPageState extends State<CryingAnalyticsPage> {
   Widget build(BuildContext context) {
     final screenWidth = MediaQuery.of(context).size.width;
     final screenHeight = MediaQuery.of(context).size.height;
+    
+    List<BarChartModel> chartData = [
+      BarChartModel(
+        cryReason: "Belly pain",
+        numberOfSounds: numberOfcryReasons[0],
+        color: charts.ColorUtil.fromDartColor(Colors.blue),
+      ),
+      BarChartModel(
+        cryReason: "Burping",
+        numberOfSounds: numberOfcryReasons[1],
+        color: charts.ColorUtil.fromDartColor(Colors.yellow),
+      ),
+      BarChartModel(
+        cryReason: "Discomfort",
+        numberOfSounds: numberOfcryReasons[2],
+        color: charts.ColorUtil.fromDartColor(Colors.green),
+      ),
+      BarChartModel(
+        cryReason: "Hungry",
+        numberOfSounds: numberOfcryReasons[3],
+        color: charts.ColorUtil.fromDartColor(Colors.red),
+      ),
+      BarChartModel(
+        cryReason: "Tired",
+        numberOfSounds: numberOfcryReasons[4],
+        color: charts.ColorUtil.fromDartColor(Colors.purple),
+      ),
+    ];
 
     List<charts.Series<BarChartModel, String>> series = [
       charts.Series(
@@ -88,15 +102,12 @@ class _CryingAnalyticsPageState extends State<CryingAnalyticsPage> {
         centerTitle: true,
         elevation: 16,
       ),
-      body: ModalProgressHUD(
-        inAsyncCall: showSpinner,
-        child: Center(
-          child: SizedBox(
-            width: screenWidth * 0.9,
-            child: charts.BarChart(
-              series,
-              animate: true,
-            ),
+      body: Center(
+        child: SizedBox(
+          width: screenWidth * 0.9,
+          child: charts.BarChart(
+            series,
+            animate: true,
           ),
         ),
       ),

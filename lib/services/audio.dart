@@ -37,7 +37,6 @@ class SoundRecorder {
     if (!_isRecorderInitialised) return;
 
     _audioRecorder!.closeAudioSession();
-    _audioRecorder = null;
     _isRecorderInitialised = false;
   }
 
@@ -58,7 +57,7 @@ class SoundRecorder {
   }
 
   Future toggleRecording() async {
-    if (_audioRecorder!.isStopped && SoundPlayer._audioPlayer!.isStopped) {
+    if (SoundRecorder._audioRecorder!.isStopped && SoundPlayer._audioPlayer!.isStopped) {
       await _record();
     } else {
       await _stop();
@@ -86,7 +85,6 @@ class SoundPlayer {
     if (!_isPlayerInitialised) return;
 
     _audioPlayer!.closeAudioSession();
-    _audioPlayer = null;
     _isPlayerInitialised = false;
   }
 

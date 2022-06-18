@@ -11,9 +11,6 @@ import '../static/colors.dart';
 
 class AdminDashboard extends StatefulWidget {
   const AdminDashboard({Key? key}) : super(key: key);
-  static int numberOfParents = 0;
-  static int numberOfCryings = 0;
-
   @override
   State<AdminDashboard> createState() => _AdminDashboardState();
 }
@@ -21,6 +18,8 @@ class AdminDashboard extends StatefulWidget {
 class _AdminDashboardState extends State<AdminDashboard> {
   bool isLoadingAnalytics = true;
   Timer? _refreshLastCryTimeTimer;
+  int numberOfParents = 0;
+  int numberOfCryings = 0;
 
   final List<TextDirection> textDirection = [
     TextDirection.ltr,
@@ -28,24 +27,32 @@ class _AdminDashboardState extends State<AdminDashboard> {
   ];
 
   void fetchAnalytics() async {
-    isLoadingAnalytics = true;
-
     await FirestoreDb.getNumberOfParents();
     await FirestoreDb.getNumberOfCryings();
 
-    isLoadingAnalytics = false;
-    setState(() {});
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    setState(() {
+      numberOfParents = prefs.getInt("numberOfParents")!;
+      numberOfCryings = prefs.getInt("numberOfCryings")!;
+      isLoadingAnalytics = false;
+    });
   }
 
   @override
   void initState() {
     super.initState();
+    fetchAnalytics();
 
     _refreshLastCryTimeTimer =
-        Timer.periodic(const Duration(minutes: 1), (timer) {
+        Timer.periodic(const Duration(seconds: 1), (timer) {
       fetchAnalytics();
-      setState(() {});
     });
+  }
+
+  @override
+  void dispose() {
+    _refreshLastCryTimeTimer!.cancel();
+    super.dispose();
   }
 
   @override
@@ -54,7 +61,7 @@ class _AdminDashboardState extends State<AdminDashboard> {
     final screenHeight = MediaQuery.of(context).size.height;
 
     return ModalProgressHUD(
-      inAsyncCall: false,
+      inAsyncCall: isLoadingAnalytics,
       child: SingleChildScrollView(
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.center,
@@ -86,7 +93,7 @@ class _AdminDashboardState extends State<AdminDashboard> {
                   color: CustomColors.primary,
                   image: "parents.png",
                   label: "Parents",
-                  reading: AdminDashboard.numberOfParents,
+                  reading: numberOfParents,
                   unit: " ",
                 ),
                 SizedBox(width: screenWidth * 0.1),
@@ -94,7 +101,7 @@ class _AdminDashboardState extends State<AdminDashboard> {
                   color: CustomColors.secondary,
                   image: "baby-crying.png",
                   label: "Cryings",
-                  reading: AdminDashboard.numberOfCryings,
+                  reading: numberOfCryings,
                   unit: " ",
                 ),
               ],

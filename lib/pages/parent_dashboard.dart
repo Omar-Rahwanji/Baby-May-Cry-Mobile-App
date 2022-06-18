@@ -101,81 +101,53 @@ class _ParentDashboardState extends State<ParentDashboard> {
     final screenWidth = MediaQuery.of(context).size.width;
     final screenHeight = MediaQuery.of(context).size.height;
 
-    return ModalProgressHUD(
-      inAsyncCall: isLoadingCryReason,
-      child: SingleChildScrollView(
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.center,
-          children: [
-            SizedBox(
-              width: double.infinity,
-              height: screenHeight * 0.029,
+    return SingleChildScrollView(
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.center,
+        children: [
+          SizedBox(
+            width: double.infinity,
+            height: screenHeight * 0.029,
+          ),
+          Text(
+            "Hello, Parent".tr(),
+            style: const TextStyle(
+              fontWeight: FontWeight.w300,
+              fontSize: 30,
             ),
-            Text(
-              "Hello, Parent".tr(),
-              style: const TextStyle(
-                fontWeight: FontWeight.w300,
-                fontSize: 30,
+          ),
+          SizedBox(height: screenHeight * 0.07),
+          Row(
+            textDirection: translator.activeLanguageCode == "en"
+                ? textDirection[0]
+                : textDirection[1],
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              Text(
+                "Your baby didn't cry since ".tr(),
+                style: const TextStyle(
+                  color: Colors.blueGrey,
+                  fontSize: 20,
+                ),
               ),
-            ),
-            SizedBox(height: screenHeight * 0.07),
-            Row(
-              textDirection: translator.activeLanguageCode == "en"
-                  ? textDirection[0]
-                  : textDirection[1],
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                Text(
-                  "Your baby didn't cry since ".tr(),
-                  style: const TextStyle(
-                    color: Colors.blueGrey,
-                    fontSize: 20,
-                  ),
+              Text(
+                lastCryDateTime.toString(),
+                style: TextStyle(
+                  color: CustomColors.secondary,
+                  fontSize: 20,
                 ),
-                Text(
-                  lastCryDateTime.toString(),
-                  style: TextStyle(
-                    color: CustomColors.secondary,
-                    fontSize: 20,
-                  ),
-                ),
-                Row(
-                  children: [
-                    const Text(
-                      " ",
-                      style: TextStyle(
-                        color: Colors.blueGrey,
-                        fontSize: 20,
-                      ),
-                    ),
-                    Text(
-                      timeUnit,
-                      style: const TextStyle(
-                        color: Colors.blueGrey,
-                        fontSize: 20,
-                      ),
-                    ),
-                  ],
-                ),
-              ],
-            ),
-            SizedBox(height: screenHeight * 0.03),
-            Align(
-              alignment: translator.activeLanguageCode == "en"
-                  ? Alignment.centerLeft
-                  : Alignment.centerRight,
-              child: Row(
-                textDirection: translator.activeLanguageCode == "en"
-                    ? textDirection[0]
-                    : textDirection[1],
+              ),
+              Row(
                 children: [
-                  SizedBox(
-                    width: translator.activeLanguageCode == "en"
-                        ? screenWidth * 0.133
-                        : screenWidth * 0.2,
+                  const Text(
+                    " ",
+                    style: TextStyle(
+                      color: Colors.blueGrey,
+                      fontSize: 20,
+                    ),
                   ),
                   Text(
-                    "Last cry reason".tr(),
+                    timeUnit,
                     style: const TextStyle(
                       color: Colors.blueGrey,
                       fontSize: 20,
@@ -183,47 +155,25 @@ class _ParentDashboardState extends State<ParentDashboard> {
                   ),
                 ],
               ),
-            ),
-            SizedBox(height: screenHeight * 0.05),
-            Visibility(
-              visible: isLoadingCryReason,
-              child: SizedBox(
-                width: screenWidth * 0.5,
-                child: const LinearProgressIndicator(),
-              ),
-            ),
-            Visibility(
-              visible: !isLoadingCryReason,
-              child: Text(
-                cryReason.tr(),
-                style: const TextStyle(
-                  fontSize: 42,
-                ),
-              ),
-            ),
-            SizedBox(height: screenHeight * 0.04),
-            Text(
-              "Duration".tr(),
-              style: const TextStyle(
-                color: Colors.blueGrey,
-                fontSize: 16,
-              ),
-            ),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.center,
+            ],
+          ),
+          SizedBox(height: screenHeight * 0.03),
+          Align(
+            alignment: translator.activeLanguageCode == "en"
+                ? Alignment.centerLeft
+                : Alignment.centerRight,
+            child: Row(
               textDirection: translator.activeLanguageCode == "en"
                   ? textDirection[0]
                   : textDirection[1],
               children: [
-                Text(
-                  "6".tr(),
-                  style: const TextStyle(
-                    fontWeight: FontWeight.bold,
-                    fontSize: 20,
-                  ),
+                SizedBox(
+                  width: translator.activeLanguageCode == "en"
+                      ? screenWidth * 0.133
+                      : screenWidth * 0.2,
                 ),
                 Text(
-                  " " + "seconds".tr(),
+                  "Last cry reason".tr(),
                   style: const TextStyle(
                     color: Colors.blueGrey,
                     fontSize: 20,
@@ -231,13 +181,60 @@ class _ParentDashboardState extends State<ParentDashboard> {
                 ),
               ],
             ),
-            SizedBox(height: screenHeight * 0.07),
-            const RecorderButton(),
-            SizedBox(height: screenHeight * 0.07),
-            const PlayerButton(),
-            SizedBox(height: screenHeight * 0.02),
-          ],
-        ),
+          ),
+          SizedBox(height: screenHeight * 0.05),
+          Visibility(
+            visible: isLoadingCryReason,
+            child: SizedBox(
+              width: screenWidth * 0.5,
+              child: const LinearProgressIndicator(),
+            ),
+          ),
+          Visibility(
+            visible: !isLoadingCryReason,
+            child: Text(
+              cryReason.tr(),
+              style: const TextStyle(
+                fontSize: 42,
+              ),
+            ),
+          ),
+          SizedBox(height: screenHeight * 0.04),
+          Text(
+            "Duration".tr(),
+            style: const TextStyle(
+              color: Colors.blueGrey,
+              fontSize: 16,
+            ),
+          ),
+          Row(
+            mainAxisAlignment: MainAxisAlignment.center,
+            textDirection: translator.activeLanguageCode == "en"
+                ? textDirection[0]
+                : textDirection[1],
+            children: [
+              Text(
+                "6".tr(),
+                style: const TextStyle(
+                  fontWeight: FontWeight.bold,
+                  fontSize: 20,
+                ),
+              ),
+              Text(
+                " " + "seconds".tr(),
+                style: const TextStyle(
+                  color: Colors.blueGrey,
+                  fontSize: 20,
+                ),
+              ),
+            ],
+          ),
+          SizedBox(height: screenHeight * 0.07),
+          const RecorderButton(),
+          SizedBox(height: screenHeight * 0.07),
+          const PlayerButton(),
+          SizedBox(height: screenHeight * 0.02),
+        ],
       ),
     );
   }
